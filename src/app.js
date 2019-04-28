@@ -11,7 +11,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/public', express.static('public'));
 
 app.use(express.static(__dirname + '/'));
-app.use('/node/shrine-app', routes.router)
+app.use('/node/darshan-app', routes.router)
 app.set('views', './src/views/');
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
