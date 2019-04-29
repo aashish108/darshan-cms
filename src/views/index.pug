@@ -1,73 +1,32 @@
 html
-  head
-    title= title
-    link(rel="stylesheet" href="/css-framework/bulma.min.css" type="text/css")
+  include includes/head.pug
   body
     section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
-      // Hero head: will stick at the top
       .hero-head
-        header.navbar
-          .container.is-fluid
-            .navbar-brand
-              h1.title
-                | Darshan Uploader
-              span.navbar-burger.burger(data-target='navbarMenuHeroC')
-                span
-                span
-                span
-            //- #navbarMenuHeroC.navbar-menu
-            //-   .navbar-end
-            //-     a.navbar-item.is-active
-            //-       | Home
-            //-     a.navbar-item
-            //-       | Examples
-            //-     a.navbar-item
-            //-       | Documentation
-            //-     span.navbar-item
-            //-       a.button.is-success.is-inverted
-            //-         span.icon
-            //-           i.fab.fa-github
-            //-         span Download
-      // Hero content: will be in the middle
+        include includes/header.pug
       .hero-body
         .container.is-fluid
           .columns
-            .column.is-one-fifth
-              aside.menu
-                p.menu-label
-                  | Stage 1
-                ul.menu-list
-                  li
-                    a.is-active Upload
-                p.menu-label
-                  | Stage 2
-                ul.menu-list
-                  li
-                    a Download for Processing
-                p.menu-label
-                  | Stage 3
-                ul.menu-list
-                  li
-                    a Upload
-                  li
-                    a Post Online
-            .column
-              .columns
-                .column.is-vcentered
-                  .file.has-name.is-boxed.is-vcentered
-                    label.file-label.box
-                      input#files.file-input.is-large.is-boxed.has-name(type='file' name='resume' multiple onchange="updateFileNames();")
-                      span.file-cta
-                        span.file-icon
-                          i.fas.fa-upload
-                        span.file-label
-                          | Select several files via shift-click
-                      .columns.is-centered
-                        .column.is-full
-                          div#filesNames.is-full.is-large
-              .columns.is-vcentered
-                .column.is-one-fifth
-                  textarea.textarea.box(placeholder='Outfit Details')
+            include includes/adminSidebar.pug
+            form(action="/node/darshan-app/upload/process" method="post" enctype="multipart/form-data")
+              .column
+                .columns
+                  .column.is-vcentered
+                    .file.has-name.is-boxed.is-vcentered
+                      label.file-label.box
+                        input#files.file-input.is-large.is-boxed.has-name(type='file' name='darshanPhotos' multiple onchange="updateFileNames();")
+                        span.file-cta
+                          span.file-icon
+                            i.fas.fa-upload
+                          span.file-label
+                            | Select several files via shift-click
+                        .columns.is-centered
+                          .column.is-full
+                            div#filesNames.is-full.is-large
+                .columns.is-vcentered
+                  .column
+                    textarea.textarea.box(placeholder='Outfit Details' name='outfitDetails')
+                    button.button.is-success(type='submit') Submit
       
     script(defer='' src='https://use.fontawesome.com/releases/v5.3.1/js/all.js')
     script(defer='' src='/public/uploading-raw-files.js')

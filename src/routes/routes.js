@@ -11,10 +11,11 @@ router.get('/upload', function (req, res) {
   res.end();
 })
 
-router.post('/upload/process', upload.array('darshanPhotos', 12), function (req, res) {
+router.post('/upload/process', upload.array('darshanPhotos', 30), function (req, res) {
+  console.log(req.body);
   const con = new controller(req.files, req.body.outfitDetails);
   con.init();
-  res.render('upload', { title: 'Upload Successful', message: 'Uploaded!', req });
+  res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
   console.log(req.files);
   console.log(req.body);
   res.end();
