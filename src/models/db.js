@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const darshanUploadsModel = require('./schemas');
 const moment = require('moment');
 
