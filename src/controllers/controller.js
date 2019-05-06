@@ -16,14 +16,14 @@ function getRawUploadsFromDB() {
   return db.getRawUploadsFromDB();
 }
 
-async function getRawUploadedImagesRoute(req,res) {
+async function getRawUploadedImages(req,res) {
   const results = await getRawUploadsFromDB();
   console.log(results);
   res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results: results });
   res.end();
 }
 
-async function uploadRawImagesRoute(req, res) {
+async function uploadRawImages(req, res) {
   const compressedFileOutputName = await compressImages(req.files);
   addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
   res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
@@ -72,7 +72,7 @@ module.exports = {
   init:init,
   addRawUploadsToDB,
   getRawUploadsFromDB,
-  getRawUploadedImagesRoute,
-  uploadRawImagesRoute,
+  getRawUploadedImages,
+  uploadRawImages,
   compressImages,
 };

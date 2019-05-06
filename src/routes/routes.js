@@ -11,11 +11,11 @@ router.get('/upload', function (req, res) {
 })
 
 router.post('/upload/process', upload.array('darshanPhotos', 30), function (req, res) {
-  controller.uploadRawImagesRoute(req,res);
+  controller.uploadRawImages(req,res);
 })
 
 router.get('/raw-uploaded-images', function (req, res) { 
-  controller.getRawUploadedImagesRoute(req,res);
+  controller.getRawUploadedImages(req,res);
 })
 
 module.exports = {
