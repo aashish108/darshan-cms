@@ -33,7 +33,7 @@ async function addUploadsToDB(files, outfitDetails) {
 
 async function getRawUploadsFromDB() {
   try {
-    return darshanRawUploadsModel.find({}) 
+    return darshanRawUploadsModel.find({}).sort({time: 'desc'})
   } catch (e) {
     console.log(e);
     throw e;
