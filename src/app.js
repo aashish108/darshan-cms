@@ -1,10 +1,14 @@
 const express = require('express');
 const routes = require('./routes/routes');
 const httpsLocalhost = require("https-localhost")
+const controller = require('./controllers/controller');
+
 const app = express()
 var https = require('https')
 var pem = require('pem')
 const port = 3000
+
+controller.init();
 
 app.set('view engine', 'pug')
 

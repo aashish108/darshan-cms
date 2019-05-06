@@ -1,0 +1,23 @@
+html
+  include includes/head.pug
+  body
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            .column
+              .columns
+                .column.is-vcentered
+                  .div-table
+                    each result in results
+                      .columns.is-gapless
+                        .column= result.time
+                        .column= result.outfitDetails
+
+                .columns.is-vcentered
+                  .column
+
+    include includes/footerScripts.pug     

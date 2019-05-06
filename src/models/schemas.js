@@ -1,13 +1,13 @@
 let mongoose = require('mongoose');
 let validator = require('validator');
 
-let darshanUploadsSchema = new mongoose.Schema({
+let darshanRawUploadsSchema = new mongoose.Schema({
   time: {
     type: Date, 
     required: true,
   },
   files: {
-    type: Array,
+    type: String,
     required: true,
   },
   outfitDetails: {
@@ -16,4 +16,4 @@ let darshanUploadsSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Darshan Uploads', darshanUploadsSchema)
+module.exports = mongoose.model('Darshan Uploads', darshanRawUploadsSchema)
