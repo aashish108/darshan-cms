@@ -1,8 +1,4 @@
 const db = require('../models/db');
-// archiver
-const fs = require('fs');
-const archiver = require('archiver');
-const moment = require('moment');
 const fbApi = require('./helpers/fbApi');
 const imageTools = require('./helpers/imageTools');
 

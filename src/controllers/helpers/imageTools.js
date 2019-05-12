@@ -1,3 +1,7 @@
+// archiver
+const fs = require('fs');
+const archiver = require('archiver');
+
 async function compressImages(files) {
   const aTime = Date.now();
   const fileName = `${aTime}.zip`;
