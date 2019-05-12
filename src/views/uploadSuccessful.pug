@@ -1,6 +1,6 @@
 html
   include includes/head.pug
-  body
+  body.page-uploadRawImagesSuccessful
     section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
       .hero-head
         include includes/header.pug
@@ -12,7 +12,7 @@ html
               .columns
                 each val in req.files
                   .column
-                    img.image.is-3by2(src=`/uploads/${val.filename}`)
+                    img.image.is-3by2(src=`/uploads/temp_raw_images/${val.filename}`)
       
     script(defer='' src='https://use.fontawesome.com/releases/v5.3.1/js/all.js')
-    script(defer='' src='/public/uploading-raw-files.js')
+    script(defer='' src='/public/js/uploading-raw-files.js')

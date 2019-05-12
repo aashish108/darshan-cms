@@ -3,6 +3,7 @@ const db = require('../models/db');
 const fs = require('fs');
 const archiver = require('archiver');
 const moment = require('moment');
+const fbApi = require('./helpers/fbApi');
 
 function init() {
   db.connect();
@@ -10,6 +11,10 @@ function init() {
 
 function addRawUploadsToDB(files, outfitDetails) {
   db.addUploadsToDB(files, outfitDetails);
+}
+
+function addProcessedUploadsToDB(files, outfitDetails) {
+  db.addProcessedUploadsToDB(files, outfitDetails);
 }
 
 function getRawUploadsFromDB() {
@@ -21,7 +26,7 @@ async function getRawUploadedImages(req,res) {
   console.log(results);
   res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results: results });
   res.end();
-}
+} 
 
 async function uploadRawImages(req, res) {
   const compressedFileOutputName = await compressImages(req.files);
@@ -32,10 +37,35 @@ async function uploadRawImages(req, res) {
   res.end();
 }
 
+async function uploadProcessedImages(req, res) {
+  addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.fbPageToken);
+  fbApi.urlConstruction(req.files, req.body.outfitDetails, req.body.fbPageToken);
+  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded!', req });
+  res.end();
+}
+
+async function createDirsIfNotExist(dirs) {
+  for (dir of dirs) {
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+  }
+  return true;
+}
+
 async function compressImages(files) {
   const aTime = Date.now();
   const fileName = `${aTime}.zip`;
-  const output = fs.createWriteStream(`uploads/compressed/${aTime}.zip`);
+
+  const dirs = [
+    'úploads',
+    'uploads/compressed_raw_images',
+    'uploads/temp_raw_images',
+  ];
+
+  await createDirsIfNotExist(dirs);
+
+  const output = fs.createWriteStream(`uploads/compressed_raw_images/${aTime}.zip`);
   const archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
@@ -60,7 +90,7 @@ async function compressImages(files) {
   archive.pipe(output);
   
   for (let file of files) {
-    var file1 = `./uploads/${file.filename}`;
+    var file1 = `./uploads/temp_raw_images/${file.filename}`;
     archive.append(fs.createReadStream(file1), { name: `${file.filename}.jpg` });
   }
 
@@ -75,4 +105,5 @@ module.exports = {
   getRawUploadedImages,
   uploadRawImages,
   compressImages,
+  uploadProcessedImages,
 };

@@ -1,6 +1,6 @@
 html
   include includes/head.pug
-  body.page-uploadRawImages
+  body.page-uploadProcessedImages
     section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
       .hero-head
         include includes/header.pug
@@ -8,13 +8,13 @@ html
         .container.is-fluid
           .columns
             include includes/adminSidebar.pug
-            form(action="/node/darshan-app/upload/process" method="post" enctype="multipart/form-data")
+            form(action="/node/darshan-app/upload-processed-images/process" method="post" enctype="multipart/form-data")
               .column
                 .columns
                   .column.is-vcentered
                     .file.has-name.is-boxed.is-vcentered
                       label.file-label.box
-                        input#files.file-input.is-large.is-boxed.has-name(type='file' name='darshanPhotos' multiple onchange="updateFileNames();")
+                        input#files.file-input.is-large.is-boxed.has-name(type='file' name='processedDarshanPhotos' multiple onchange="updateFileNames();")
                         span.file-cta
                           span.file-icon
                             i.fas.fa-upload
@@ -25,8 +25,10 @@ html
                             div#filesNames.is-full.is-large
                 .columns.is-vcentered
                   .column
+                    input#fbToken.input.is-invisible(type='text' name='fbPageToken')
                     textarea.textarea.box(placeholder='Outfit Details' name='outfitDetails')
                     button.button.is-success(type='submit') Submit
       
     include includes/footerScripts.pug
-    script(defer='' src='/public/js/uploading-raw-files.js')
+    script(defer='' src='/public/js/facebookApi.js')
+    script(async='' defer='' src='https://connect.facebook.net/en_US/sdk.js')

@@ -1,19 +1,3 @@
-function updateFileNames() {
-  const files = document.getElementById("files").files;
-  let html = '';
-  document.getElementById("filesNames").innerHTML = '';
-  console.log(files);
-  if (files.length > 0) {
-    for (let i = 0; i < files.length; i++) {
-      html += files[i].name+'<br>';
-    }
-  }
-  else {
-    html = 'No files uploaded yet.'
-  }
-  document.getElementById("filesNames").innerHTML = html;
-}
-
 window.fbAsyncInit = function() {
   FB.init({
     appId            : '2316161761778187',
@@ -58,7 +42,7 @@ window.fbAsyncInit = function() {
           } else {
             console.log(response);
             const token = response.access_token;
-      
+            document.getElementById("fbToken").value = token; 
             // FB.api(
             //   "/161715481383/feed",
             //   "POST",
@@ -90,4 +74,4 @@ window.fbAsyncInit = function() {
     });
 };
 
-updateFileNames();
+fbAsyncInit();

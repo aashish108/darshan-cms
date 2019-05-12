@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 let validator = require('validator');
 
-let darshanRawUploadsSchema = new mongoose.Schema({
+const darshanRawUploadsSchema = new mongoose.Schema({
   time: {
     type: Date, 
     required: true,
@@ -16,4 +16,25 @@ let darshanRawUploadsSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Darshan Uploads', darshanRawUploadsSchema)
+const darshanProcessedUploadsSchema = new mongoose.Schema({
+  time: {
+    type: Date, 
+    required: true,
+  },
+  files: {
+    type: Array,
+    required: true,
+  },
+  outfitDetails: {
+    type: String,
+    required: true,
+  }
+})
+
+const darshanRawUploads = mongoose.model('Darshan Raw Uploads', darshanRawUploadsSchema);
+const darshanProcessedUploads = mongoose.model('Darshan Processed Uploads', darshanProcessedUploadsSchema);
+
+module.exports = {
+  darshanRawUploads,
+  darshanProcessedUploads,
+};

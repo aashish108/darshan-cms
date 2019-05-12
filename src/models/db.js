@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const darshanRawUploadsModel = require('./schemas');
+const darshanModels = require('./schemas');
 const moment = require('moment');
 
 const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
@@ -17,7 +17,22 @@ async function connect() {
 }
 
 async function addUploadsToDB(files, outfitDetails) {
-  const addToDB = new darshanRawUploadsModel({
+  const addToDB = new darshanModels.darshanRawUploads({
+    time: moment().format(),
+    files,
+    outfitDetails,
+  });
+  try {
+    await addToDB.save();
+    console.log('Save to DB successful.')
+  } catch(e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+async function addProcessedUploadsToDB(files, outfitDetails) {
+  const addToDB = new darshanModels.darshanProcessedUploads({
     time: moment().format(),
     files,
     outfitDetails,
@@ -33,7 +48,7 @@ async function addUploadsToDB(files, outfitDetails) {
 
 async function getRawUploadsFromDB() {
   try {
-    return darshanRawUploadsModel.find({}).sort({time: 'desc'})
+    return darshanModels.darshanRawUploads.find({}).sort({time: 'desc'})
   } catch (e) {
     console.log(e);
     throw e;
@@ -41,7 +56,8 @@ async function getRawUploadsFromDB() {
 }
 
 module.exports = {
-  connect: connect,
-  addUploadsToDB: addUploadsToDB,
-  getRawUploadsFromDB: getRawUploadsFromDB,
+  connect,
+  addUploadsToDB,
+  getRawUploadsFromDB,
+  addProcessedUploadsToDB,
 }
