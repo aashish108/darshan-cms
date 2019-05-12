@@ -47,6 +47,5 @@ module.exports = {
   getRawUploadsFromDB,
   getRawUploadedImages,
   uploadRawImages,
-  compressImages,
   uploadProcessedImages,
 };
