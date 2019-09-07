@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const darshanModels = require('./schemas');
+const darshanModels = require('../models/schemas');
 const moment = require('moment');
 
 const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER

@@ -1,6 +1,6 @@
-const db = require('../models/db');
-const fbApi = require('./helpers/fbApi');
-const imageTools = require('./helpers/imageTools');
+const db = require('../helpers/db');
+const fbApi = require('../helpers/fbApi');
+const imageTools = require('../helpers/imageTools');
 
 function init() {
   db.connect();

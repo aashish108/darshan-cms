@@ -20,17 +20,23 @@ app.use(express.static(__dirname + '/'));
 
 app.set('views', './src/views/');
 
+// TODO: remove PEM
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-var https = require('https')
-var pem = require('pem')
+// var https = require('https')
+// var pem = require('pem')
 
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-  if (err) {
-    throw err
-  }
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {
+//     throw err
+//   }
 
-  app.use('/node/darshan-app', routes.router)
+//   app.use('/node/darshan-app', routes.router)
 
-  https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(443)
-})
+//   https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(443)
+// })
+// 
+app.use('/node/darshan-app', routes.router);
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+module.exports = app;
