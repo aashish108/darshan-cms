@@ -31,11 +31,12 @@ async function addUploadsToDB(files, outfitDetails) {
   }
 }
 
-async function addProcessedUploadsToDB(files, outfitDetails) {
+async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
   const addToDB = new darshanModels.darshanProcessedUploads({
-    time: moment().format(),
+    timeUploaded: moment().format(),
     files,
     outfitDetails,
+    darshanDate
   });
   try {
     await addToDB.save();
@@ -55,9 +56,19 @@ async function getRawUploadsFromDB() {
   }
 }
 
+async function getLatestProcessedUpload() {
+  try {
+    return darshanModels.darshanProcessedUploads.findOne({}).sort({_id:-1});
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
 module.exports = {
   connect,
   addUploadsToDB,
   getRawUploadsFromDB,
   addProcessedUploadsToDB,
+  getLatestProcessedUpload,
 }

@@ -1,0 +1,29 @@
+html
+  include includes/head.pug
+  body.page-rawUploadedImages
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            .column
+              .columns
+                .column.is-vcentered
+                  .div-table
+                      .columns.is-gapless
+                        .column
+                          form(action="/node/darshan-app/stage3/twitter/upload" method="post")
+                            .column= latestDarshanImages.darshanDate
+                            .column= latestDarshanImages.outfitDetails
+                            each image in latestDarshanImages.files
+                              img(src='/uploads/processed_images/' + image.filename)
+                            .columns.is-vcentered
+                              .column
+                                button.button.is-success(type='submit') Upload to Twitter
+
+                .columns.is-vcentered
+                  .column
+
+    include includes/footerScripts.pug     

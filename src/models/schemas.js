@@ -3,7 +3,7 @@ let validator = require('validator');
 
 const darshanRawUploadsSchema = new mongoose.Schema({
   time: {
-    type: Date, 
+    type: Date,
     required: true,
   },
   files: {
@@ -13,12 +13,12 @@ const darshanRawUploadsSchema = new mongoose.Schema({
   outfitDetails: {
     type: String,
     required: true,
-  }
-})
+  },
+});
 
 const darshanProcessedUploadsSchema = new mongoose.Schema({
-  time: {
-    type: Date, 
+  timeUploaded: {
+    type: Date,
     required: true,
   },
   files: {
@@ -28,8 +28,12 @@ const darshanProcessedUploadsSchema = new mongoose.Schema({
   outfitDetails: {
     type: String,
     required: true,
-  }
-})
+  },
+  darshanDate: {
+    type: Date,
+    required: true,
+  },
+});
 
 const darshanRawUploads = mongoose.model('Darshan Raw Uploads', darshanRawUploadsSchema);
 const darshanProcessedUploads = mongoose.model('Darshan Processed Uploads', darshanProcessedUploadsSchema);

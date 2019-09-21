@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-twitter').Strategy;
-const routes = require('./routes/routes');
+const routes = require('./routes/index');
 // const httpsLocalhost = require("https-localhost")
 const controller = require('./controllers/controller');
 
@@ -19,8 +19,8 @@ if (process.env.DYNO) {
 }
 
 passport.use(new Strategy({
-  consumerKey: process.env.CONSUMER_KEY,
-  consumerSecret: process.env.CONSUMER_SECRET,
+  consumerKey: process.env.TWITTER_CONSUMER_KEY,
+  consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
   callbackURL: 'http://127.0.0.1:3000/node/darshan-app/twitter-auth/step3',
   proxy: trustProxy,
 }, (token, tokenSecret, profile, cb) => cb(null, profile)));
@@ -35,7 +35,7 @@ passport.deserializeUser((obj, cb) => {
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
-app.use(require('morgan')('combined'));
+// app.use(require('morgan')('combined'));
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {secure: false} }));
 
@@ -45,6 +45,7 @@ app.use(passport.session());
 app.set('view engine', 'pug');
 
 app.use('/css-framework', express.static('node_modules/bulma/css')); // redirect CSS bootstrap
+app.use('/bulma-calendar', express.static('node_modules/bulma-calendar/dist'));
 app.use('/uploads', express.static('uploads'));
 app.use('/public', express.static('public'));
 
