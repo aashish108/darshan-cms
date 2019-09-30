@@ -26,17 +26,21 @@ function getLatestProcessedUploadsFromDB() {
 async function getRawUploadedImages(req, res) {
   const results = await getRawUploadsFromDB();
   console.log(results);
-  res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results: results });
+  res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
   res.end();
 }
 
 async function uploadRawImages(req, res) {
-  const compressedFileOutputName = await imageTools.compressImages(req.files);
-  addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-  res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
-  console.log(req.files);
-  console.log(req.body);
-  res.end();
+  try {
+    const compressedFileOutputName = await imageTools.compressImages(req.files);
+    addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
+    res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
+    res.end();
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 async function uploadProcessedImages(req, res) {

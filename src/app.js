@@ -18,20 +18,20 @@ if (process.env.DYNO) {
   trustProxy = true;
 }
 
-passport.use(new Strategy({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-  callbackURL: 'http://127.0.0.1:3000/node/darshan-app/twitter-auth/step3',
-  proxy: trustProxy,
-}, (token, tokenSecret, profile, cb) => cb(null, profile)));
+// passport.use(new Strategy({
+//   consumerKey: process.env.TWITTER_CONSUMER_KEY,
+//   consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+//   callbackURL: 'http://127.0.0.1:3000/node/darshan-app/twitter-auth/step3',
+//   proxy: trustProxy,
+// }, (token, tokenSecret, profile, cb) => cb(null, profile)));
 
-passport.serializeUser((user, cb) => {
-  cb(null, user);
-});
+// passport.serializeUser((user, cb) => {
+//   cb(null, user);
+// });
 
-passport.deserializeUser((obj, cb) => {
-  cb(null, obj);
-});
+// passport.deserializeUser((obj, cb) => {
+//   cb(null, obj);
+// });
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -70,6 +70,6 @@ app.set('views', './src/views/');
 // })
 // 
 app.use('/node/darshan-app', routes.router);
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;

@@ -1,5 +1,5 @@
-let mongoose = require('mongoose');
-let validator = require('validator');
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const darshanRawUploadsSchema = new mongoose.Schema({
   time: {
@@ -35,10 +35,10 @@ const darshanProcessedUploadsSchema = new mongoose.Schema({
   },
 });
 
-const darshanRawUploads = mongoose.model('Darshan Raw Uploads', darshanRawUploadsSchema);
-const darshanProcessedUploads = mongoose.model('Darshan Processed Uploads', darshanProcessedUploadsSchema);
+const DarshanRawUploads = mongoose.model('Darshan Raw Uploads', darshanRawUploadsSchema);
+const DarshanProcessedUploads = mongoose.model('Darshan Processed Uploads', darshanProcessedUploadsSchema);
 
 module.exports = {
-  darshanRawUploads,
-  darshanProcessedUploads,
+  DarshanRawUploads,
+  DarshanProcessedUploads,
 };

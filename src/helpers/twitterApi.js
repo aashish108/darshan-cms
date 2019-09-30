@@ -2,11 +2,12 @@ const Twitter = require('twitter');
 const fileSystem = require('fs');
 
 class TwitterApi {
-
   constructor(darshan) {
     this.darshan = darshan;
     console.log('darshan: ', darshan);
     console.log('darshan.files: ', darshan.files);
+    this.mediaIds = [];
+    this.filesUploaded = 0;
   }
 
   init() {
@@ -25,32 +26,33 @@ class TwitterApi {
 
   darshanImages() {
     for (const image of this.darshan.files) {
-      let data = fileSystem.readFileSync(`${__basedir}/uploads/processed_images/${image.filename}`);
+      const data = fileSystem.readFileSync(`${__basedir}/uploads/processed_images/${image.filename}`);
       this.uploadMedia(data);
     }
   }
 
   uploadMedia(data) {
-   // client.get(path, params, callback);
-  // client.post(path, params, callback);
-  // client.stream(path, params, callback);
     this.client.post('media/upload', { media: data }, (error, media, response) => {
       if (!error) {
         // If successful, a media object will be returned.
-        console.log(media);
-        // // Lets tweet it
-        // const status = {
-        //   status: 'I am a tweet',
-        //   media_ids: media.media_id_string, // Pass the media id string
-        // };
-        // console.log(status);
+        this.mediaIds.push(media.media_id_string);
+        console.log('this.darshan.outfitDetails');
+        console.log(this.darshan.outfitDetails);
+        this.filesUploaded += 1;
+        if (this.filesUploaded === this.darshan.files.length) {
+          this.tweet();
+        }
       } else {
         console.log('Úpload to Twitter failed: ', error);
       }
     });
   }
 
-  tweet(status) {
+  tweet() {
+    const status = {
+      status: this.darshan.outfitDetails,
+      media_ids: this.mediaIds.join(),
+    };
     this.client.post('statuses/update', status, (error, tweet, response) => {
       if (!error) {
         console.log(tweet);

@@ -17,7 +17,7 @@ async function connect() {
 }
 
 async function addUploadsToDB(files, outfitDetails) {
-  const addToDB = new darshanModels.darshanRawUploads({
+  const addToDB = new darshanModels.DarshanRawUploads({
     time: moment().format(),
     files,
     outfitDetails,
@@ -32,7 +32,7 @@ async function addUploadsToDB(files, outfitDetails) {
 }
 
 async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
-  const addToDB = new darshanModels.darshanProcessedUploads({
+  const addToDB = new darshanModels.DarshanProcessedUploads({
     timeUploaded: moment().format(),
     files,
     outfitDetails,
@@ -49,7 +49,7 @@ async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
 
 async function getRawUploadsFromDB() {
   try {
-    return darshanModels.darshanRawUploads.find({}).sort({time: 'desc'})
+    return darshanModels.DarshanRawUploads.find({}).sort({time: 'desc'})
   } catch (e) {
     console.log(e);
     throw e;
@@ -58,7 +58,7 @@ async function getRawUploadsFromDB() {
 
 async function getLatestProcessedUpload() {
   try {
-    return darshanModels.darshanProcessedUploads.findOne({}).sort({_id:-1});
+    return darshanModels.DarshanProcessedUploads.findOne({}).sort({_id:-1});
   } catch (e) {
     console.log(e);
     throw e;

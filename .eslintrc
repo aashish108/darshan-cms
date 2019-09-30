@@ -1,8 +1,12 @@
 {
-"extends": "airbnb",
-"env": {
-"node": true,
-"mocha": true,
-"browser": true
-}
+	"extends": "airbnb",
+	"env": {
+		"node": true,
+		"mocha": true,
+		"browser": true
+	},
+	"rules": {
+		"no-restricted-syntax": "off",
+		"no-console": "off",
+	},
 }
