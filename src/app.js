@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-const Strategy = require('passport-twitter').Strategy;
 const routes = require('./routes/index');
 // const httpsLocalhost = require("https-localhost")
 const controller = require('./controllers/controller');
