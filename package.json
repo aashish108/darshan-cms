@@ -13,11 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "archiver": "^3.0.0",
-    "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "bulma": "^0.7.4",
     "bulma-calendar": "^6.0.7",
-    "canvas": "^2.6.0",
     "connect-ensure-login": "^0.1.1",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
@@ -27,12 +25,9 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "passport": "^0.4.0",
-    "passport-twitter": "^1.0.4",
     "pug": "^2.0.3",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
-    "twitter": "^1.7.1",
-    "validator": "^10.11.0"
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -44,7 +39,6 @@
     "https-localhost": "^4.1.0",
     "mocha": "^6.2.0",
     "mongodb-memory-server": "^5.2.5",
-    "nock": "^11.3.5",
     "nyc": "^14.1.1",
     "pem": "^1.14.2",
     "proxyquire": "^2.1.3",
