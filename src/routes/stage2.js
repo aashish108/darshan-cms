@@ -5,8 +5,10 @@ const controller = require('../controllers/controller');
 const uploadProcessed = multer({ dest: 'uploads/processed_images' });
 const router = Router();
 
-router.get('/raw-uploaded-images', (req, res) => {
-  controller.getRawUploadedImages(req, res);
+router.get('/raw-uploaded-images', async (req, res) => {
+  const results = await controller.getRawUploadedImages(req, res);
+  res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
+  res.end();
 });
 
 router.get('/uploads/compressed-raw-images/:file', (req, res) => {
@@ -35,8 +37,14 @@ router.get('/upload-processed-images', (req, res) => {
 });
 
 
-router.post('/upload-processed-images/process', uploadProcessed.array('processedDarshanPhotos', 30), (req, res) => {
-  controller.uploadProcessedImages(req, res);
+router.post('/upload-processed-images/process', uploadProcessed.array('processedDarshanPhotos', 30), async (req, res) => {
+  const result = await controller.uploadProcessedImages(req, res);
+  if (result) {
+    res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded!', req });
+    res.end();
+  }
+  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded failed', req });
+  res.end();
 });
 
 module.exports = router;

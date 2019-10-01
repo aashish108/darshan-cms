@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const darshanModels = require('../models/schemas');
 const moment = require('moment');
+const darshanModels = require('../models/schemas');
 
 const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
 const database = 'see-our-shrine-uploads'; // REPLACE WITH YOUR DB NAME
@@ -10,9 +10,9 @@ async function connect() {
     await mongoose.connect(`mongodb://${server}/${database}`);
     console.log('Database connection successful');
     return true;
-  } catch {
+  } catch (e) {
     console.error('Database connection error');
-    throw err;
+    throw e;
   }
 }
 
@@ -24,8 +24,8 @@ async function addUploadsToDB(files, outfitDetails) {
   });
   try {
     await addToDB.save();
-    console.log('Save to DB successful.')
-  } catch(e) {
+    console.log('Save to DB successful.');
+  } catch (e) {
     console.log(e);
     throw e;
   }
@@ -36,12 +36,12 @@ async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
     timeUploaded: moment().format(),
     files,
     outfitDetails,
-    darshanDate
+    darshanDate,
   });
   try {
     await addToDB.save();
-    console.log('Save to DB successful.')
-  } catch(e) {
+    console.log('Save to DB successful.');
+  } catch (e) {
     console.log(e);
     throw e;
   }
@@ -49,7 +49,7 @@ async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
 
 async function getRawUploadsFromDB() {
   try {
-    return darshanModels.DarshanRawUploads.find({}).sort({time: 'desc'})
+    return darshanModels.DarshanRawUploads.find({}).sort({ time: 'desc' });
   } catch (e) {
     console.log(e);
     throw e;
@@ -58,7 +58,7 @@ async function getRawUploadsFromDB() {
 
 async function getLatestProcessedUpload() {
   try {
-    return darshanModels.DarshanProcessedUploads.findOne({}).sort({_id:-1});
+    return darshanModels.DarshanProcessedUploads.findOne({}).sort({ _id: -1 });
   } catch (e) {
     console.log(e);
     throw e;
@@ -71,4 +71,4 @@ module.exports = {
   getRawUploadsFromDB,
   addProcessedUploadsToDB,
   getLatestProcessedUpload,
-}
+};

@@ -15,19 +15,16 @@ function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
   db.addProcessedUploadsToDB(files, outfitDetails, darshanDate);
 }
 
-function getRawUploadsFromDB() {
+async function getRawUploadsFromDB() {
   return db.getRawUploadsFromDB();
 }
 
-function getLatestProcessedUploadsFromDB() {
+async function getLatestProcessedUploadsFromDB() {
   return db.getLatestProcessedUpload();
 }
 
-async function getRawUploadedImages(req, res) {
-  const results = await getRawUploadsFromDB();
-  console.log(results);
-  res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
-  res.end();
+async function getRawUploadedImages() {
+  return getRawUploadsFromDB();
 }
 
 async function uploadRawImages(req, res) {
@@ -43,24 +40,28 @@ async function uploadRawImages(req, res) {
   }
 }
 
-async function uploadProcessedImages(req, res) {
-  addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.darshanDate, req.body.fbPageToken);
-  // fbApi.urlConstruction(req.files, req.body.outfitDetails, req.body.fbPageToken);
-  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded!', req });
-  res.end();
+async function uploadProcessedImages(req) {
+  try {
+    await addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.darshanDate, req.body.fbPageToken);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
-async function getProcessedUploadedImages(req, res) {
-  const latestDarshanImages = await getLatestProcessedUploadsFromDB();
-  console.log(latestDarshanImages);
-  res.render('latest-darshan-images', { title: 'Daily Darshan Files Uploader', latestDarshanImages });
-  res.end();
+async function getProcessedUploadedImages() {
+  try {
+    return getLatestProcessedUploadsFromDB();
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 async function uploadToTwitter() {
   const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB());
   twitterApiInstance.init();
-  // const data = fileSystem.readFileSync(`${__basedir}/uploads/processed_images/0d5f94559120a3a6e928c350035b22bc.jpg`);
 }
 
 module.exports = {

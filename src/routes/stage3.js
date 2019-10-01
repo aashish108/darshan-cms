@@ -3,18 +3,14 @@ const controller = require('../controllers/controller');
 
 const router = Router();
 
-router.get('/twitter', (req, res) => {
-  controller.getProcessedUploadedImages(req, res);
+router.get('/twitter', async (req, res) => {
+  const latestDarshanImages = await controller.getProcessedUploadedImages(req, res);
+  res.render('latest-darshan-images', { title: 'Daily Darshan Files Uploader', latestDarshanImages });
+  res.end();
 });
 
 router.post('/twitter/upload', (req, res) => {
   controller.uploadToTwitter(req, res);
 });
-
-router.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  (req, res) => {
-    res.json(req.user);
-  });
 
 module.exports = router;
