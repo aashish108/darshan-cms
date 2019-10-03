@@ -6,9 +6,13 @@ const uploadProcessed = multer({ dest: 'uploads/processed_images' });
 const router = Router();
 
 router.get('/raw-uploaded-images', async (req, res) => {
-  const results = await controller.getRawUploadedImages(req, res);
-  res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
-  res.end();
+  try {
+    const results = await controller.getRawUploadedImages(req, res);
+    res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
+    res.end();
+  } catch (e) {
+    res.status(500).json(e);
+  }
 });
 
 router.get('/uploads/compressed-raw-images/:file', (req, res) => {
@@ -43,7 +47,7 @@ router.post('/upload-processed-images/process', uploadProcessed.array('processed
     res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded!', req });
     res.end();
   }
-  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded failed', req });
+  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Upload failed', req });
   res.end();
 });
 

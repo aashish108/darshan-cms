@@ -38,7 +38,7 @@ describe('Controller unit testing', () => {
     res.end = () => true;
     res.render = () => true;
     const results = await controller.getRawUploadedImages(req, res);
-    return assert.equal(results[0].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was aded in previous step.');
+    return assert.equal(results[1].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was aded in previous step.');
   });
 
   it('uploadProcessedImages', async () => {
@@ -61,7 +61,7 @@ describe('Controller unit testing', () => {
     const res = {};
     res.end = () => true;
     res.render = () => true;
-    const results = await controller.getProcessedUploadedImages(req, res);
+    const results = await controller.getLatestProcessedUploads(req, res);
     return assert.equal(results.outfitDetails, 'Outfit test 2', 'data is saved in DB and equates to what was aded in previous step for uploading processed images.');
   });
 });

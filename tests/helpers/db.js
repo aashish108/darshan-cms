@@ -9,7 +9,7 @@ let database;
 
 const before = async () => {
   database = new MongoMemoryServer();
-  mongoose.connect(await database.getConnectionString());
+  return mongoose.connect(await database.getConnectionString());
 };
 
 const after = async () => {

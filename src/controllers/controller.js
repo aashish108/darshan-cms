@@ -7,12 +7,12 @@ function init() {
   db.connect();
 }
 
-function addRawUploadsToDB(files, outfitDetails) {
-  db.addUploadsToDB(files, outfitDetails);
+async function addRawUploadsToDB(files, outfitDetails) {
+  return db.addUploadsToDB(files, outfitDetails);
 }
 
-function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
-  db.addProcessedUploadsToDB(files, outfitDetails, darshanDate);
+async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
+  return db.addProcessedUploadsToDB(files, outfitDetails, darshanDate);
 }
 
 async function getRawUploadsFromDB() {
@@ -30,13 +30,12 @@ async function getRawUploadedImages() {
 async function uploadRawImages(req, res) {
   try {
     const compressedFileOutputName = await imageTools.compressImages(req.files);
-    addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
+    await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
     res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
     res.end();
     return true;
   } catch (e) {
-    console.log(e);
-    return false;
+    throw new Error(e);
   }
 }
 
@@ -50,18 +49,17 @@ async function uploadProcessedImages(req) {
   }
 }
 
-async function getProcessedUploadedImages() {
-  try {
-    return getLatestProcessedUploadsFromDB();
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+async function getLatestProcessedUploads() {
+  return getLatestProcessedUploadsFromDB();
 }
 
 async function uploadToTwitter() {
   const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB());
   twitterApiInstance.init();
+}
+
+async function getTwoLatestProcessedUploads() {
+  return db.getTwoLatestProcessedUploads();
 }
 
 module.exports = {
@@ -71,6 +69,7 @@ module.exports = {
   getRawUploadedImages,
   uploadRawImages,
   uploadProcessedImages,
-  getProcessedUploadedImages,
+  getLatestProcessedUploads,
   uploadToTwitter,
+  getTwoLatestProcessedUploads,
 };

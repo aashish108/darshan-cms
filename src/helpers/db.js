@@ -32,15 +32,14 @@ async function addUploadsToDB(files, outfitDetails) {
 }
 
 async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
-  const addToDB = new darshanModels.DarshanProcessedUploads({
+  const addToDB = await new darshanModels.DarshanProcessedUploads({
     timeUploaded: moment().format(),
     files,
     outfitDetails,
     darshanDate,
   });
   try {
-    await addToDB.save();
-    console.log('Save to DB successful.');
+    return addToDB.save();
   } catch (e) {
     console.log(e);
     throw e;
@@ -58,7 +57,16 @@ async function getRawUploadsFromDB() {
 
 async function getLatestProcessedUpload() {
   try {
-    return darshanModels.DarshanProcessedUploads.findOne({}).sort({ _id: -1 });
+    return darshanModels.DarshanProcessedUploads.find({}).sort({ _id: -1 }).limit(1);
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+async function getTwoLatestProcessedUploads() {
+  try {
+    return darshanModels.DarshanProcessedUploads.find({}).sort({ _id: -1 }).limit(2);
   } catch (e) {
     console.log(e);
     throw e;
@@ -71,4 +79,5 @@ module.exports = {
   getRawUploadsFromDB,
   addProcessedUploadsToDB,
   getLatestProcessedUpload,
+  getTwoLatestProcessedUploads,
 };

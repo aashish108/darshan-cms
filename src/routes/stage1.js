@@ -12,7 +12,11 @@ router.get('/upload', (req, res) => {
 });
 
 router.post('/upload/process', uploadRaw.array('darshanPhotos', 30), (req, res) => {
-  controller.uploadRawImages(req, res);
+  try {
+    controller.uploadRawImages(req, res);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 });
 
 module.exports = router;
