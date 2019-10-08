@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "archiver": "^3.0.0",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "bulma": "^0.7.4",
     "bulma-calendar": "^6.0.7",

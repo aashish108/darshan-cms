@@ -1,0 +1,32 @@
+html
+  include includes/head.pug
+  body.page-uploadRawImages
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            form(action="/node/darshan-app/stage1/upload/process" method="post" enctype="multipart/form-data")
+              .column
+                .columns
+                  .column.is-vcentered
+                    .file.has-name.is-boxed.is-vcentered
+                      label.file-label.box
+                        input#files.file-input.is-large.is-boxed.has-name(type='file' name='darshanPhotos' multiple onchange="updateFileNames();")
+                        span.file-cta
+                          span.file-icon
+                            i.fas.fa-upload
+                          span.file-label
+                            | Select several files via shift-click
+                        .columns.is-centered
+                          .column.is-full
+                            div#filesNames.is-full.is-large
+                .columns.is-vcentered
+                  .column
+                    textarea.textarea.box(placeholder='Outfit Details' name='outfitDetails')
+                    button.button.is-success(type='submit') Submit
+      
+    include includes/footerScripts.pug
+    script(defer='' src='/public/js/uploading-raw-files.js')
