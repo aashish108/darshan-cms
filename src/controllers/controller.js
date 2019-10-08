@@ -41,8 +41,8 @@ async function uploadRawImages(req, res) {
 
 async function uploadProcessedImages(req) {
   try {
-    await addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.darshanDate, req.body.fbPageToken);
-    return true;
+    return addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.darshanDate, req.body.fbPageToken);
+    return x;
   } catch (e) {
     console.log(e);
     return false;

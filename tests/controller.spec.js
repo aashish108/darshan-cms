@@ -53,7 +53,8 @@ describe('Controller unit testing', () => {
     res.end = () => true;
     res.render = () => true;
     console.log(await controller.uploadProcessedImages(req, res));
-    return assert.isTrue(await controller.uploadProcessedImages(req, res), 'Adding uploaded and processed images to DB returned as a success.');
+    const response = await controller.uploadProcessedImages(req, res);
+    return assert.isNotNull(response._id, 'Adding uploaded and processed images to DB returned as a success.');
   });
 
   it('getProcessedUploadedImages - data uploaded is saved in DB', async () => {
@@ -62,6 +63,6 @@ describe('Controller unit testing', () => {
     res.end = () => true;
     res.render = () => true;
     const results = await controller.getLatestProcessedUploads(req, res);
-    return assert.equal(results.outfitDetails, 'Outfit test 2', 'data is saved in DB and equates to what was aded in previous step for uploading processed images.');
+    return assert.equal(results[0].outfitDetails, 'Outfit test 2', 'data is saved in DB and equates to what was aded in previous step for uploading processed images.');
   });
 });
