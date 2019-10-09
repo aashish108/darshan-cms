@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const darshanModels = require('../models/schemas');
 
-const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
+const server = 'mongo:27017'; // REPLACE WITH YOUR DB SERVER
 const database = 'see-our-shrine-uploads'; // REPLACE WITH YOUR DB NAME
 
 async function connect() {

@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha \"./tests/**/*.spec.js\" --exit",
     "coverage": "nyc --reporter=lcov npm run test",
-    "build:js": "./node_modules/.bin/babel src --out-dir lib --presets=@babel/env",
-    "start": "nodemon server.js -e js,pug"
+    "startdev": "nodemon server.js -e js,pug",
+    "start": "node server.js"
   },
   "author": "Aashish Sharma",
   "license": "ISC",
