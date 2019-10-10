@@ -1,25 +1,18 @@
-image: node:latest
-
-cache:
-paths:
-- node_modules/
 stages:
-  - release
-release:
-  stage: release
+  - build
+build:
   image: docker:latest
+  stage: build
   only:
     - "master"
   services:
     - docker:dind
-  variables:
-    DOCKER_DRIVER: "overlay"
-before_script:
+  before_script:
     - docker version
-    - "docker info"
-    - "docker login $CONTAINER_REGISTRY -u $USERNAME -p $PERSONAL_ACCESS_TOKEN"
+    - docker info
+    - docker login $CONTAINER_REGISTRY -u $USERNAME -p $PERSONAL_ACCESS_TOKEN
   script:
-    - "docker build -t $CONTAINER_REGISTRY/iskcon-london/node.js/darshan ."
-    - "docker push $CONTAINER_REGISTRY/iskcon-london/node.js/darshan"
+    - docker build -t $CONTAINER_REGISTRY/iskcon-london/node.js/darshan .
+    - docker push $CONTAINER_REGISTRY/iskcon-london/node.js/darshan
   after_script:
-    - "docker logout $CONTAINER_REGISTRY"
+    - docker logout $CONTAINER_REGISTRY
