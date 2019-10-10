@@ -5,3 +5,4 @@ uploads
 *.sublime-workspace
 coverage
 .nyc_output
+.DS_Store

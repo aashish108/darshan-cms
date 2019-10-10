@@ -1,0 +1,18 @@
+release:
+  stage: release
+  image: docker:latest
+  only:
+    - "master"
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: "overlay"
+before_script:
+    - docker version
+    - "docker info"
+    - "docker login $CONTAINER_REGISTRY -u $USERNAME -p $PERSONAL_ACCESS_TOKEN"
+  script:
+    - "docker build -t $CONTAINER_REGISTRY/iskcon-london/node.js/darshan ."
+    - "docker push $CONTAINER_REGISTRY/iskcon-london/node.js/darshan"
+  after_script:
+    - "docker logout $CONTAINER_REGISTRY"
