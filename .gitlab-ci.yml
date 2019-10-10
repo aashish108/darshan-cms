@@ -1,3 +1,5 @@
+stages:
+  - release
 release:
   stage: release
   image: docker:latest
