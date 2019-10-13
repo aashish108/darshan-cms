@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const darshanRawUploadsTestData = require('./darshanRawUploadsTestData');
 const darshanProcessedUploadsTestData = require('./darshanProcessedUploadsTestData');
+const authTestData = require('./authTestData');
 
 let database;
 
@@ -21,6 +22,7 @@ const setup = async () => {
   await before();
   await darshanRawUploadsTestData.init();
   await darshanProcessedUploadsTestData.init();
+  await authTestData.init();
 };
 
 module.exports = { setup, before, after };

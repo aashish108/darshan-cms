@@ -61,6 +61,22 @@ async function getTwoLatestProcessedUploads() {
   return db.getTwoLatestProcessedUploads();
 }
 
+async function findUser(user) {
+  return db.findUser(user);
+}
+
+async function findUserByID(id) {
+  return db.findUserByID(id);
+}
+
+async function authUser(user, password) {
+  return db.authUser(user, password);
+}
+
+function setupAdminUser() {
+  db.setupAdminUser();
+}
+
 module.exports = {
   init,
   addRawUploadsToDB,
@@ -71,4 +87,8 @@ module.exports = {
   getLatestProcessedUploads,
   uploadToTwitter,
   getTwoLatestProcessedUploads,
+  findUser,
+  findUserByID,
+  authUser,
+  setupAdminUser,
 };
