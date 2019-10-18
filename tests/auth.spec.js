@@ -4,7 +4,7 @@ const controller = require('../src/controllers/controller.js');
 describe('User auth testing', () => {
   it('user auth works in verifying correct credentials', async () => {
     const verifyUser = await controller.authUser('Sov108', 'Password');
-    assert.isTrue(verifyUser, 'User/password are correct.');
+    assert.exists(verifyUser.username, 'User/password are correct.');
   });
 
   it('user auth works in declining an auth if user password credentials are wrong', async () => {
