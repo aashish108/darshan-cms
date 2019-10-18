@@ -18,7 +18,7 @@ router.get('/login',
 router.post('/login',
   passport.authenticate('local', { failureRedirect: '/node/darshan-app/login?fail=why' }),
   (req, res) => {
-    res.redirect('/stage1/upload');
+    res.redirect('/node/darshan-app/stage1/upload');
   });
 
 router.get('/logout',

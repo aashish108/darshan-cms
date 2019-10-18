@@ -83,7 +83,11 @@ async function authUser(user, password) {
         if (error) throw error;
         return isMatch;
       };
-      return userFound.comparePassword(password, comparePasswordCallBack);
+      console.log('in db.js authUser fn.');
+      if (userFound.comparePassword(password, comparePasswordCallBack)) {
+        return userFound;
+      }
+      return false;
     }
     return false;
   } catch (e) {
