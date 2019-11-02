@@ -1,11 +1,12 @@
 const { Router } = require('express');
 const multer = require('multer');
+const loggedIn = require('connect-ensure-login');
 const controller = require('../controllers/controller');
 
 const uploadProcessed = multer({ dest: 'uploads/processed_images' });
 const router = Router();
 
-router.get('/raw-uploaded-images', async (req, res) => {
+router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
     const results = await controller.getRawUploadedImages(req, res);
     res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
@@ -35,7 +36,7 @@ router.get('/uploads/compressed-raw-images/:file', (req, res) => {
   });
 });
 
-router.get('/upload-processed-images', (req, res) => {
+router.get('/upload-processed-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), (req, res) => {
   res.render('upload-processed-images', { title: 'Daily Darshan Files Uploader' });
   res.end();
 });

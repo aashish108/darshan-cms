@@ -16,7 +16,7 @@ router.get('/login',
 // });
 
 router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/node/darshan-app/login?fail=why' }),
+  passport.authenticate('local', { failureRedirect: '/node/darshan-app/login' }),
   (req, res) => {
     res.redirect('/node/darshan-app/stage1/upload');
   });
@@ -34,6 +34,7 @@ const api = require('./api');
 
 router.use('/stage1', stage1);
 router.use('/stage2', stage2);
+router.use('/stage3', stage3);
 router.use('/api', api);
 
 module.exports = {
