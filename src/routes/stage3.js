@@ -7,7 +7,6 @@ const router = Router();
 router.get('/twitter', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
     const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
-    console.log('daily darshan', latestDarshanImages);
     res.render('upload-to-twitter', { title: 'Daily Darshan Files Uploader', latestDarshanImages });
     res.end();
   } catch (e) {

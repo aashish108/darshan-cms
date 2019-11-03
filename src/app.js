@@ -26,15 +26,15 @@ if (process.env.DYNO) {
 // will be set at `req.user` in route handlers after authentication.
 passport.use(new Strategy(
   async (username, password, cb) => {
-    console.log('In new strategy');
+    // console.log('In new strategy');
     try {
       const userFound = await controller.findUser(username);
       if (userFound) {
-        console.log('user found.');
+        // console.log('user found.');
         const authUser = await controller.authUser(username, password);
         if (authUser) {
-          console.log('user authed.');
-          console.log('authUser', authUser);
+          // console.log('user authed.');
+          // console.log('authUser', authUser);
           return cb(null, authUser);
         }
       }
@@ -55,17 +55,17 @@ passport.use(new Strategy(
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser((user, cb) => {
-  console.log('serializeUser');
-  console.log('user: ', user);
-  console.log('cb: ', cb);
+  // console.log('serializeUser');
+  // console.log('user: ', user);
+  // console.log('cb: ', cb);
   cb(null, user.id);
 });
 
 passport.deserializeUser(async (id, cb) => {
   try {
-  console.log('deserializeUser');
-  console.log('id: ', id);
-  console.log('cb: ', cb);
+    // console.log('deserializeUser');
+    // console.log('id: ', id);
+    // console.log('cb: ', cb);
     const userID = await controller.findUserByID(id);
     return cb(null, userID);
   } catch (e) {

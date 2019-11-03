@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/login',
   (req, res) => {
+    console.log('Redirecting to login');
     res.render('login');
   });
 
