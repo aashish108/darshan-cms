@@ -81,8 +81,8 @@ async function getUsers() {
   return db.getUsers();
 }
 
-async function updateUser(username, password, res) {
-  await db.updateUser(username, password);
+async function updateUser(username, password, roles, res) {
+  await db.updateUser(username, password,  roles);
   res.redirect('/node/darshan-app/admin');
   res.end();
 }

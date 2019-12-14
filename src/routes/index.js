@@ -41,8 +41,8 @@ router.get('/admin', async (req, res) => {
 
 router.post('/admin/process', (req, res) => {
   try {
-    const { username, newPassword } = req.body;
-    controller.updateUser(username, newPassword, res);
+    const { username, newPassword, roles } = req.body;
+    controller.updateUser(username, newPassword, roles, res);
   } catch (e) {
     res.status(500).json(e);
   }

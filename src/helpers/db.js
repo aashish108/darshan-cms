@@ -127,9 +127,10 @@ async function setupAdminUser() {
   }
 }
 
-async function updateUser(username, password) {
+async function updateUser(username, password, roles) {
   const user = await users.Users.findOne({ username });
   user.password = password;
+  user.roles = roles;
   try {
     await user.save();
     return true;
