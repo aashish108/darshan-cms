@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const passport = require('passport');
+const controller = require('../controllers/controller');
 // const request = require('request');
 const router = Router();
 
@@ -27,6 +28,25 @@ router.get('/logout',
     req.logout();
     res.redirect('/');
   });
+
+router.get('/admin', async (req, res) => {
+  try {
+    const results = await controller.getUsers();
+    res.render('adminUsersAccess', { title: 'Daily Darshan Files Uploader', results });
+    res.end();
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
+router.post('/admin/process', (req, res) => {
+  try {
+    const { username, newPassword } = req.body;
+    controller.updateUser(username, newPassword, res);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
 
 const stage1 = require('./stage1');
 const stage2 = require('./stage2');

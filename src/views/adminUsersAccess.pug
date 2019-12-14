@@ -1,0 +1,27 @@
+html
+  include includes/head.pug
+  body.page-adminUsersAccess
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            .column
+              .columns
+                .column.is-vcentered
+                  .div-table 
+                    form(action="/node/darshan-app/admin/process" method="post")
+                      each result in results
+                        .columns
+                          .column
+                            input.input(type="text" readonly="readonly" value=`${result.username}` name="username")
+                          .column
+                            input.input(type="password" placeholder="Enter new password" name="newPassword")
+                        button.button.is-success(type='submit') Submit
+
+                .columns.is-vcentered
+                  .column
+
+    include includes/footerScripts.pug     

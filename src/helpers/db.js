@@ -127,6 +127,27 @@ async function setupAdminUser() {
   }
 }
 
+async function updateUser(username, password) {
+  const user = await users.Users.findOne({ username });
+  user.password = password;
+  try {
+    await user.save();
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+async function getUsers() {
+  try {
+    return users.Users.find({});
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
 module.exports = {
   connect,
   addUploadsToDB,
@@ -138,4 +159,6 @@ module.exports = {
   findUserByID,
   authUser,
   setupAdminUser,
+  getUsers,
+  updateUser,
 };

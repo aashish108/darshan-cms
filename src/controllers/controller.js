@@ -77,6 +77,16 @@ function setupAdminUser() {
   db.setupAdminUser();
 }
 
+async function getUsers() {
+  return db.getUsers();
+}
+
+async function updateUser(username, password, res) {
+  await db.updateUser(username, password);
+  res.redirect('/node/darshan-app/admin');
+  res.end();
+}
+
 module.exports = {
   init,
   addRawUploadsToDB,
@@ -91,4 +101,6 @@ module.exports = {
   findUserByID,
   authUser,
   setupAdminUser,
+  getUsers,
+  updateUser,
 };
