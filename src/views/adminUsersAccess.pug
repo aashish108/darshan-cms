@@ -13,6 +13,7 @@ html
                 .columns
                   .column.is-vcentered
                     .div-table 
+                      h2.title Edit Existing Users
                       form(action="/node/darshan-app/admin/process" method="post")
                         each result in results
                           .columns
@@ -47,6 +48,25 @@ html
                                   span processor
 
                           button.button.is-success(type='submit') Submit
+                    .div-table 
+                      h2.title Add New User
+                      form(action="/node/darshan-app/admin/process/add-new-user" method="post")
+                        .columns
+                          .column
+                            input.input(type="text" name="newUsername")
+                          .column
+                            input.input(type="password" placeholder="Enter new password" name="newPassword")
+                          .column
+                            label.checkbox(for=`newAdmin`)
+                              input.column(id=`newAdmin` type="checkbox" name="roles[]" value=`admin`) 
+                              span admin
+                            label.checkbox(for=`newUploader`)
+                              input.column(id=`newUploader` type="checkbox" name="roles[]" value=`uploader`) 
+                              span uploader
+                            label.checkbox(for=`newProcessor`)
+                              input.column(id=`newProcessor` type="checkbox" name="roles[]" value=`processor`) 
+                              span processor
+                        button.button.is-success(type='submit') Submit
 
                   .columns.is-vcentered
                     .column

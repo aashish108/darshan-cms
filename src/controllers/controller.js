@@ -82,7 +82,13 @@ async function getUsers() {
 }
 
 async function updateUser(username, password, roles, res) {
-  await db.updateUser(username, password,  roles);
+  await db.updateUser(username, password, roles);
+  res.redirect('/node/darshan-app/admin');
+  res.end();
+}
+
+async function addNewUser(username, password, roles, res) {
+  await db.addNewUser(username, password, roles);
   res.redirect('/node/darshan-app/admin');
   res.end();
 }
@@ -103,4 +109,5 @@ module.exports = {
   setupAdminUser,
   getUsers,
   updateUser,
+  addNewUser,
 };

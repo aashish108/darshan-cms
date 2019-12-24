@@ -149,6 +149,21 @@ async function getUsers() {
   }
 }
 
+async function addNewUser(username, password, roles) {
+  const newUser = await new users.Users({
+    username,
+    password,
+    roles,
+  });
+  try {
+    await newUser.save();
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
 module.exports = {
   connect,
   addUploadsToDB,
@@ -162,4 +177,5 @@ module.exports = {
   setupAdminUser,
   getUsers,
   updateUser,
+  addNewUser,
 };

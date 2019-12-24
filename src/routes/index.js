@@ -48,6 +48,15 @@ router.post('/admin/process', (req, res) => {
   }
 });
 
+router.post('/admin/process/add-new-user', (req, res) => {
+  try {
+    const { newUsername, newPassword, roles } = req.body;
+    controller.addNewUser(newUsername, newPassword, roles, res);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
 const stage1 = require('./stage1');
 const stage2 = require('./stage2');
 const stage3 = require('./stage3');
