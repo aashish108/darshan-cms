@@ -8,7 +8,7 @@ const router = Router();
 const uploadRaw = multer({ dest: 'uploads/temp_raw_images' });
 
 router.get('/upload', loggedIn.ensureLoggedIn('/node/darshan-app/login'), (req, res) => {
-  res.render('index', { title: 'Daily Darshan Files Uploader' });
+  res.render('index', { title: 'Daily Darshan Files Uploader', user: req.user.username, roles: req.user.roles });
   res.end();
 });
 

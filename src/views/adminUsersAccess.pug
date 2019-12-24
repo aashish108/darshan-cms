@@ -14,43 +14,44 @@ html
                   .column.is-vcentered
                     .div-table 
                       h2.title Edit Existing Users
-                      form(action="/node/darshan-app/admin/process" method="post")
-                        each result in results
+                      - var index = 0;
+                      each result in results
+                        - index = index + 1;
+                        form(action="/node/darshan-app/admin/process" method="post" autocomplete="off")
                           .columns
                             .column
-                              input.input(type="text" readonly="readonly" value=`${result.username}` name="username")
+                              input.input(type="text" readonly="readonly" value=`${result.username}` name=`username`)
                             .column
-                              input.input(type="password" placeholder="Enter new password" name="newPassword")
+                              input.input(type="password" placeholder="Enter new password" name=`newPassword`)
                             .column
                               if (result.roles.includes('admin'))
-                                label.checkbox(for=`admin`)
-                                  input.column(id=`admin` type="checkbox" name="roles[]" checked value=`admin`) 
+                                label.checkbox(for=`admin${index}`)
+                                  input.column(id=`admin${index}` type="checkbox" name=`roles[]` checked value=`admin`) 
                                   span admin
                               else
-                                label.checkbox(for=`admin`)
-                                  input.column(id=`admin` type="checkbox" name="roles[]" value=`admin`) 
+                                label.checkbox(for=`admin${index}`)
+                                  input.column(id=`admin${index}` type="checkbox" name=`roles[]` value=`admin`) 
                                   span admin
                               if (result.roles.includes('uploader'))
-                                label.checkbox(for=`uploader`)
-                                  input.column(id=`uploader` type="checkbox" name="roles[]" checked value=`uploader`) 
+                                label.checkbox(for=`uploader${index}`)
+                                  input.column(id=`uploader${index}` type="checkbox" name=`roles[]` checked value=`uploader`) 
                                   span uploader
                               else
-                                label.checkbox(for=`uploader`)
-                                  input.column(id=`uploader` type="checkbox" name="roles[]" value=`uploader`) 
+                                label.checkbox(for=`uploader${index}`)
+                                  input.column(id=`uploader${index}` type="checkbox" name=`roles[]` value=`uploader`) 
                                   span uploader
                               if (result.roles.includes('processor'))
-                                label.checkbox(for=`processor`)
-                                  input.column(id=`processor` type="checkbox" name="roles[]" checked value=`processor`)
+                                label.checkbox(for=`processor${index}`)
+                                  input.column(id=`processor${index}` type="checkbox" name=`roles[]` checked value=`processor`)
                                   span processor
                               else
-                                label.checkbox(for=`processor`)
-                                  input.column(id=`processor` type="checkbox" name="roles[]" value=`processor`) 
+                                label.checkbox(for=`processor${index}`)
+                                  input.column(id=`processor${index}` type="checkbox" name=`roles[]` value=`processor`) 
                                   span processor
-
-                          button.button.is-success(type='submit') Submit
+                          button.button.is-success(type='submit') Save
                     .div-table 
                       h2.title Add New User
-                      form(action="/node/darshan-app/admin/process/add-new-user" method="post")
+                      form(action="/node/darshan-app/admin/process/add-new-user" method="post" autocomplete="off")
                         .columns
                           .column
                             input.input(type="text" name="newUsername")

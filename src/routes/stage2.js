@@ -9,7 +9,7 @@ const router = Router();
 router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
     const results = await controller.getRawUploadedImages(req, res);
-    res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results });
+    res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results, user: req.user.username, roles: req.user.roles });
     res.end();
   } catch (e) {
     res.status(500).json(e);
@@ -37,7 +37,7 @@ router.get('/uploads/compressed-raw-images/:file', (req, res) => {
 });
 
 router.get('/upload-processed-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), (req, res) => {
-  res.render('upload-processed-images', { title: 'Daily Darshan Files Uploader' });
+  res.render('upload-processed-images', { title: 'Daily Darshan Files Uploader', user: req.user.username, roles: req.user.roles });
   res.end();
 });
 
