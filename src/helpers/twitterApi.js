@@ -2,12 +2,12 @@ const Twitter = require('twitter');
 const fileSystem = require('fs');
 
 class TwitterApi {
-  constructor(darshan) {
+  constructor(darshan, req, res) {
     this.darshan = darshan;
-    console.log('darshan: ', darshan);
-    console.log('darshan.files: ', darshan.files);
     this.mediaIds = [];
     this.filesUploaded = 0;
+    this.req = req;
+    this.res = res;
   }
 
   init() {
@@ -25,7 +25,7 @@ class TwitterApi {
   }
 
   darshanImages() {
-    for (const image of this.darshan.files) {
+    for (const image of this.darshan[0].files) {
       const data = fileSystem.readFileSync(`${__basedir}/uploads/processed_images/${image.filename}`);
       this.uploadMedia(data);
     }
@@ -36,10 +36,8 @@ class TwitterApi {
       if (!error) {
         // If successful, a media object will be returned.
         this.mediaIds.push(media.media_id_string);
-        console.log('this.darshan.outfitDetails');
-        console.log(this.darshan.outfitDetails);
         this.filesUploaded += 1;
-        if (this.filesUploaded === this.darshan.files.length) {
+        if (this.filesUploaded === this.darshan[0].files.length) {
           this.tweet();
         }
       } else {
@@ -50,12 +48,19 @@ class TwitterApi {
 
   tweet() {
     const status = {
-      status: this.darshan.outfitDetails,
+      status: this.darshan[0].outfitDetails,
       media_ids: this.mediaIds.join(),
     };
     this.client.post('statuses/update', status, (error, tweet, response) => {
       if (!error) {
-        console.log(tweet);
+        this.res.render('upload-to-twitter-confirmation', {
+          title: 'Tweet Successful',
+          message: 'Latest darshan has been tweeted',
+          user: tweet.user.screen_name,
+          tweetId: tweet.id_str,
+          roles: this.req.user.roles,
+        });
+        this.res.end();
       }
     });
   }

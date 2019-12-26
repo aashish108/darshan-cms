@@ -1,0 +1,18 @@
+html
+  include includes/head.pug
+  body.page-uploadRawImagesSuccessful
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            .column
+              h1.title= title
+              h2.subtitle= message
+              a(href=`https://twitter.com/${user}/status/${tweetId}` target="_blank") Preview tweet
+              .columns
+      
+    script(defer='' src='https://use.fontawesome.com/releases/v5.3.1/js/all.js')
+    script(defer='' src='/public/js/uploading-raw-files.js')

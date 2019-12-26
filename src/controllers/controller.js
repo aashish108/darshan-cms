@@ -58,9 +58,9 @@ async function getLatestProcessedUploads() {
   return getLatestProcessedUploadsFromDB();
 }
 
-async function uploadToTwitter() {
-  const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB());
-  twitterApiInstance.init();
+async function uploadToTwitter(req, res) {
+  const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB(), req, res);
+  twitterApiInstance.init(res);
 }
 
 async function getTwoLatestProcessedUploads() {
