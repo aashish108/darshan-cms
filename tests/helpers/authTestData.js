@@ -4,6 +4,7 @@ const init = async () => {
   const users = await new schema.Users({
     username: 'Sov108',
     password: 'Password',
+    roles: ['admin'],
   });
 
   try {
