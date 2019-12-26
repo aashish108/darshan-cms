@@ -9,10 +9,13 @@ html
           .columns
             include includes/adminSidebar.pug
             .column
+              h1.title= title
+              h2.subtitle= message
               .columns
-                each val in req.files
-                  .column
-                    img.image.is-3by2(src=`/uploads/temp_raw_images/${val.filename}`)
+                if files
+                  each val in files
+                    .column.is-3by2
+                      img.image(src=`/uploads/${subDir}/${val.filename}`)
       
     script(defer='' src='https://use.fontawesome.com/releases/v5.3.1/js/all.js')
     script(defer='' src='/public/js/uploading-raw-files.js')

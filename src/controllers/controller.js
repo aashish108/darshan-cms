@@ -32,7 +32,11 @@ async function uploadRawImages(req, res) {
     const compressedFileOutputName = await imageTools.compressImages(req.files);
     await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
     res.render('uploadSuccessful', {
-      title: 'Upload Successful', message: 'Uploaded!', req, roles: req.user.roles,
+      title: 'Upload Successful',
+      message: 'Uploaded!',
+      files: req.files,
+      roles: req.user.roles,
+      subDir: 'temp_raw_images',
     });
     res.end();
     return true;
@@ -41,9 +45,9 @@ async function uploadRawImages(req, res) {
   }
 }
 
-async function uploadProcessedImages(req) {
+async function uploadProcessedImages(files, body) {
   try {
-    return addProcessedUploadsToDB(req.files, req.body.outfitDetails, req.body.darshanDate, req.body.fbPageToken);
+    return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate, body.fbPageToken);
   } catch (e) {
     console.log(e);
     return false;

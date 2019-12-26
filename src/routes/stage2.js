@@ -41,15 +41,23 @@ router.get('/upload-processed-images', loggedIn.ensureLoggedIn('/node/darshan-ap
   res.end();
 });
 
-
 router.post('/upload-processed-images/process', uploadProcessed.array('processedDarshanPhotos', 30), async (req, res) => {
-  const result = await controller.uploadProcessedImages(req, res);
+  const { files, body } = req;
+  const result = await controller.uploadProcessedImages(files, body);
+  console.log('result', result);
   if (result) {
-    res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Uploaded!', req });
+    res.render('uploadSuccessful', {
+      title: 'Upload Processed Images',
+      message: 'Uploaded!',
+      files: result.files,
+      roles: req.user.roles,
+      subDir: 'processed_images',
+    });
+    res.end();
+  } else {
+    res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Upload failed' });
     res.end();
   }
-  res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Upload failed', req });
-  res.end();
 });
 
 module.exports = router;
