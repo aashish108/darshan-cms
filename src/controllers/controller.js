@@ -61,6 +61,38 @@ async function getTwoLatestProcessedUploads() {
   return db.getTwoLatestProcessedUploads();
 }
 
+async function findUser(user) {
+  return db.findUser(user);
+}
+
+async function findUserByID(id) {
+  return db.findUserByID(id);
+}
+
+async function authUser(user, password) {
+  return db.authUser(user, password);
+}
+
+function setupAdminUser() {
+  db.setupAdminUser();
+}
+
+async function getUsers() {
+  return db.getUsers();
+}
+
+async function updateUser(username, password, roles, res) {
+  await db.updateUser(username, password, roles);
+  res.redirect('/node/darshan-app/admin');
+  res.end();
+}
+
+async function addNewUser(username, password, roles, res) {
+  await db.addNewUser(username, password, roles);
+  res.redirect('/node/darshan-app/admin');
+  res.end();
+}
+
 module.exports = {
   init,
   addRawUploadsToDB,
@@ -71,4 +103,11 @@ module.exports = {
   getLatestProcessedUploads,
   uploadToTwitter,
   getTwoLatestProcessedUploads,
+  findUser,
+  findUserByID,
+  authUser,
+  setupAdminUser,
+  getUsers,
+  updateUser,
+  addNewUser,
 };

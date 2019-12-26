@@ -1,8 +1,6 @@
 const { assert } = require('chai');
 const moment = require('moment');
 const controller = require('../src/controllers/controller.js');
-const db = require('./helpers/db');
-
 
 describe('API testing', () => {
   it('getTwoLatestProcessedUploads', async () => {

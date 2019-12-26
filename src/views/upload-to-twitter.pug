@@ -1,6 +1,6 @@
 html
   include includes/head.pug
-  body.page-rawUploadedImages
+  body.page-uploadToTwitter
     section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
       .hero-head
         include includes/header.pug
@@ -17,8 +17,8 @@ html
                           form(action="/node/darshan-app/stage3/twitter/upload" method="post")
                             .column= latestDarshanImages.darshanDate
                             .column= latestDarshanImages.outfitDetails
-                            each image in latestDarshanImages.files
-                              img(src='/uploads/processed_images/' + image.filename)
+                            each image in latestDarshanImages[0].files
+                              img(src='/uploads/processed_images/' + image)
                             .columns.is-vcentered
                               .column
                                 button.button.is-success(type='submit') Upload to Twitter

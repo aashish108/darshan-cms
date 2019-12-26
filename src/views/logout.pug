@@ -6,15 +6,16 @@ html
         include includes/header.pug
       .hero-body
         .container.is-fluid
-          .columns.is-mobile.is-centered
-            form(action="/node/darshan-app/login" method="post" enctype="urlencoded")
+          .columns
+            include includes/adminSidebar.pug
+            form(action="/node/darshan-app/login" method="post" enctype="multipart/form-data")
               .column
                 .columns
                   .column.is-vcentered
-                    input.input(name='username' type='text' placeholder='Username')
+                    input.input(type='text' placeholder='Username')
                 .columns.is-vcentered
                   .column
-                    input.input(name='password' type='password' placeholder='Password')
+                    input.input(type='password' placeholder='Password')
                     button.button.is-success(type='submit') Submit
       
     include includes/footerScripts.pug

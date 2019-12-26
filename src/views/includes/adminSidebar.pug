@@ -1,22 +1,30 @@
-
 .column.is-one-fifth
   aside.menu
-    p.menu-label
-      | Stage 1 - Upload
-    ul.menu-list
-      li
-        a.page-uploadRawImages(href='/node/darshan-app/stage1/upload') Upload Raw Images
-    p.menu-label
-      | Stage 2 - Process
-    ul.menu-list
-      li
-        a.page-rawUploadedImages(href='/node/darshan-app/stage2/raw-uploaded-images') Download Raw Uploaded Images
-      li
-        a.page-uploadProcessedImages(href='/node/darshan-app/stage2/upload-processed-images') Upload Processed Images
-    p.menu-label
-      | Stage 3
-    ul.menu-list
-      li
-        a Upload
-      li
-        a Post Online
+    - if (roles)
+      - var uploaderRole = roles.some(role => role === 'admin' || role === 'uploader');
+    if (uploaderRole)
+      p.menu-label
+        | Stage 1 - Upload
+      ul.menu-list
+        li
+          a.page-uploadRawImages(href='/node/darshan-app/stage1/upload') Upload Raw Images
+
+    - if (roles)
+      - var processRole = roles.some(role => role === 'admin' || role === 'processor');
+    if (processRole)
+      p.menu-label
+        | Stage 2 - Process
+      ul.menu-list
+        li
+          a.page-rawUploadedImages(href='/node/darshan-app/stage2/raw-uploaded-images') Download Raw Uploaded Images
+        li
+          a.page-uploadProcessedImages(href='/node/darshan-app/stage2/upload-processed-images') Upload Processed Images
+
+    if (processRole)
+      p.menu-label
+        | Stage 3 - Launch
+      ul.menu-list
+        li
+          a.page-uploadToTwitter(href='/node/darshan-app/stage3/twitter') Upload to Twitter
+        li
+          a Post Online

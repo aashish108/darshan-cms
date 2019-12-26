@@ -38,7 +38,8 @@ describe('Controller unit testing', () => {
     res.end = () => true;
     res.render = () => true;
     const results = await controller.getRawUploadedImages(req, res);
-    return assert.equal(results[1].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was aded in previous step.');
+    console.log('DB response: ', results);
+    return assert.equal(results[1].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was added in previous step.');
   });
 
   it('uploadProcessedImages', async () => {
@@ -52,7 +53,6 @@ describe('Controller unit testing', () => {
     const res = {};
     res.end = () => true;
     res.render = () => true;
-    console.log(await controller.uploadProcessedImages(req, res));
     const response = await controller.uploadProcessedImages(req, res);
     return assert.isNotNull(response._id, 'Adding uploaded and processed images to DB returned as a success.');
   });

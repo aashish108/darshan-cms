@@ -1,15 +1,12 @@
 const express = require('express');
 const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
 const routes = require('./routes/index');
-// const httpsLocalhost = require("https-localhost")
 const controller = require('./controllers/controller');
-
-const app = express();
-// const https = require('https');
-// const pem = require('pem');
 const port = 3000;
 
 controller.init();
+// controller.setupAdminUser();
 
 let trustProxy = false;
 if (process.env.DYNO) {
@@ -17,29 +14,58 @@ if (process.env.DYNO) {
   trustProxy = true;
 }
 
-// passport.use(new Strategy({
-//   consumerKey: process.env.TWITTER_CONSUMER_KEY,
-//   consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-//   callbackURL: 'http://127.0.0.1:3000/node/darshan-app/twitter-auth/step3',
-//   proxy: trustProxy,
-// }, (token, tokenSecret, profile, cb) => cb(null, profile)));
+// Configure the local strategy for use by Passport.
+//
+// The local strategy require a `verify` function which receives the credentials
+// (`username` and `password`) submitted by the user.  The function must verify
+// that the password is correct and then invoke `cb` with a user object, which
+// will be set at `req.user` in route handlers after authentication.
+passport.use(new Strategy(
+  async (username, password, cb) => {
+    try {
+      const userFound = await controller.findUser(username);
+      if (userFound) {
+        const authUser = await controller.authUser(username, password);
+        if (authUser) {
+          return cb(null, authUser);
+        }
+      }
+      // user not found
+      return cb(null, false);
+    } catch (e) {
+      console.log(e);
+      return cb(e);
+    }
+  },
+));
 
-// passport.serializeUser((user, cb) => {
-//   cb(null, user);
-// });
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  The
+// typical implementation of this is as simple as supplying the user ID when
+// serializing, and querying the user record by ID from the database when
+// deserializing.
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
+});
 
-// passport.deserializeUser((obj, cb) => {
-//   cb(null, obj);
-// });
+passport.deserializeUser(async (id, cb) => {
+  try {
+    const userID = await controller.findUserByID(id);
+    return cb(null, userID);
+  } catch (e) {
+    return cb(e);
+  }
+});
+
+const app = express();
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
 // app.use(require('morgan')('combined'));
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {secure: false} }));
-
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
 app.set('view engine', 'pug');
 
@@ -52,22 +78,8 @@ app.use(express.static(__dirname + '/'));
 
 app.set('views', './src/views/');
 
-// TODO: remove PEM
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-// var https = require('https')
-// var pem = require('pem')
-
-// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-//   if (err) {
-//     throw err
-//   }
-
-//   app.use('/node/darshan-app', routes.router)
-
-//   https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(443)
-// })
-// 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/node/darshan-app', routes.router);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

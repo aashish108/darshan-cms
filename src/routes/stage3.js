@@ -1,16 +1,18 @@
 const { Router } = require('express');
+const loggedIn = require('connect-ensure-login');
 const controller = require('../controllers/controller');
 
 const router = Router();
 
-router.get('/twitter', async (req, res) => {
+router.get('/twitter', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
     const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
-    res.render('latest-darshan-images', { title: 'Daily Darshan Files Uploader', latestDarshanImages });
+    res.render('upload-to-twitter', {
+      title: 'Daily Darshan Files Uploader', latestDarshanImages, user: req.user.username, roles: req.user.roles,
+    });
     res.end();
   } catch (e) {
     res.status(500).json(e);
-    res.end();
   }
 });
 
