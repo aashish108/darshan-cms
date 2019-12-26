@@ -12,14 +12,21 @@ html
               .columns
                 .column.is-vcentered
                   .div-table
-                    each result in results
-                      .columns.is-gapless
-                        .column= result.time
-                        .column= result.outfitDetails
-                        .column 
-                          a(href='uploads/compressed_raw_images/' + result.files) Download Zip
-
-                .columns.is-vcentered
-                  .column
+                    table.table
+                      thead
+                        tr
+                          th
+                            abbr(title="Time") Time
+                          th
+                            abbr(title="Outfit Detail") Outfit Details
+                          th
+                            abbr(title="Download") Downloads
+                      tbody
+                        each result in results
+                          tr
+                            td= result.time
+                            td= result.outfitDetails
+                            td
+                              a(href='uploads/compressed-raw-images/' + result.files) Download Zip
 
     include includes/footerScripts.pug     

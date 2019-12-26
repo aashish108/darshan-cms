@@ -18,7 +18,7 @@ router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/lo
 
 router.get('/uploads/compressed-raw-images/:file', (req, res) => {
   const options = {
-    root: `${__basedir}/uploads/compressed`,
+    root: `${__basedir}/uploads/compressed_raw_images`,
     dotfiles: 'deny',
     headers: {
       'x-timestamp': Date.now(),

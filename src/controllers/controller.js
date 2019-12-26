@@ -31,7 +31,9 @@ async function uploadRawImages(req, res) {
   try {
     const compressedFileOutputName = await imageTools.compressImages(req.files);
     await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-    res.render('uploadSuccessful', { title: 'Upload Successful', message: 'Uploaded!', req });
+    res.render('uploadSuccessful', {
+      title: 'Upload Successful', message: 'Uploaded!', req, roles: req.user.roles,
+    });
     res.end();
     return true;
   } catch (e) {
