@@ -3,7 +3,7 @@ const moment = require('moment');
 const darshanModels = require('../models/schemas');
 const users = require('../models/users');
 
-const server = process.env.MONGODB_URL;
+const server = process.env.MONGODB_URL || '127.0.0.1';
 const database = 'see-our-shrine-uploads';
 mongoose.Promise = global.Promise;
 

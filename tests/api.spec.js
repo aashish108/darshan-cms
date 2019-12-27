@@ -14,7 +14,7 @@ describe('API testing', () => {
     req.body.darshanDate = moment().format();
     req.body.fbPageToken = 'token';
 
-    await controller.uploadProcessedImages(req, res);
+    await controller.uploadProcessedImages(req.files, req.body);
 
     const results = await controller.getTwoLatestProcessedUploads(req, res);
     return assert.equal(results.length, 2, 'There are 2 objects in the results from the DB.');
