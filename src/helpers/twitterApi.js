@@ -41,7 +41,7 @@ class TwitterApi {
           this.tweet();
         }
       } else {
-        console.log('Úpload to Twitter failed: ', error);
+        console.log('Upload to Twitter failed: ', error);
       }
     });
   }
