@@ -1,0 +1,41 @@
+html
+  include includes/head.pug
+  body.page-uploadToFacebook
+    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            include includes/adminSidebar.pug
+            .column
+              .columns
+                .column.is-vcentered
+                  .div-table
+                    form(action="/node/darshan-app/stage3/facebook/upload" method="post")
+                      table.table
+                        thead
+                          tr
+                            th
+                              abbr(title="Darshan Date") Darshan Date
+                            th
+                              abbr(title="Outfit Detail") Outfit Details
+                            th
+                              abbr(title="Images") Images
+                            th
+                              abbr(title="Upload") Upload
+                        tbody
+                          tr
+                            td= latestDarshanImages[0].darshanDate
+                            td= latestDarshanImages[0].outfitDetails
+                            td
+                              each image in latestDarshanImages[0].files
+                                figure.image.is-128x128
+                                  img(src='/uploads/processed_images/' + image.filename)
+                            td 
+                              input#fbToken.input.is-invisible(type='text' name='fbPageToken')
+                              button.button.is-success(type='submit') Upload to Facebook
+
+    include includes/footerScripts.pug
+    script(defer='' src='/public/js/facebookApi.js')
+    script(async='' defer='' src='https://connect.facebook.net/en_US/sdk.js')

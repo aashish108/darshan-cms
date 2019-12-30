@@ -4,7 +4,8 @@ function sidebarActiveMenu() {
     'page-rawUploadedImages',
     'page-uploadProcessedImages',
     'page-uploadRawImages',
-    'pageUploadToTwitter',
+    'page-uploadToTwitter',
+    'page-uploadToFacebook',
   ];
 
   for (let page of pages) {

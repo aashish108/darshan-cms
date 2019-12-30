@@ -1,5 +1,5 @@
 const db = require('../helpers/db');
-const fbApi = require('../helpers/fbApi');
+const FbApi = require('../helpers/fbApi');
 const imageTools = require('../helpers/imageTools');
 const TwitterApi = require('../helpers/twitterApi');
 
@@ -50,7 +50,7 @@ async function uploadRawImages(req, res) {
 
 async function uploadProcessedImages(files, body) {
   try {
-    return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate, body.fbPageToken);
+    return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
   } catch (e) {
     console.log(e);
     return false;
@@ -64,6 +64,11 @@ async function getLatestProcessedUploads() {
 async function uploadToTwitter(req, res) {
   const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB(), req, res);
   twitterApiInstance.init(res);
+}
+
+async function uploadToFacebook(req, res) {
+  const fbApiInstance = new FbApi(await getLatestProcessedUploadsFromDB(), req, res);
+  fbApiInstance.init();
 }
 
 async function getTwoLatestProcessedUploads() {
@@ -111,6 +116,7 @@ module.exports = {
   uploadProcessedImages,
   getLatestProcessedUploads,
   uploadToTwitter,
+  uploadToFacebook,
   getTwoLatestProcessedUploads,
   findUser,
   findUserByID,
