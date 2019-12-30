@@ -46,18 +46,4 @@ router.post('/facebook/upload', (req, res) => {
   }
 });
 
-router.get('/facebook/upload/confirmation', (req, res) => {
-  try {
-    res.render('upload-to-facebook-confirmation', {
-      title: 'Facebook post Successful',
-      message: 'Latest darshan has been posted on Facebook',
-      roles: this.req.user.roles,
-    });
-    this.res.end();
-  } catch (e) {
-    res.status(500).json(e);
-    res.end();
-  }
-});
-
 module.exports = router;
