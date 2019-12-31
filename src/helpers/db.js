@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 
 async function connect() {
   try {
-    await mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${server}/${database}`);
+    await mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${server}/${database}`, {useNewUrlParser: true});
     console.log('Database connection successful');
     return true;
   } catch (e) {
