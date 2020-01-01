@@ -18,7 +18,7 @@ class FacebookApi {
       parts.push(`{link:'${process.env.HOST}/${file.destination}/${file.filename}'},`);
     }
     const childAttachments = encodeURI(`[${parts.join('')}]`);
-    const url = `https://graph.facebook.com/v3.3/161715481383/feed?message=test12345&child_attachments=${childAttachments}&link=https://www.iskcon.london&access_token=${this.fbPageToken}`;
+    const url = `https://graph.facebook.com/v3.3/161715481383/feed?message=${this.darshan.outfitDetails}&child_attachments=${childAttachments}&link=https://www.iskcon.london&access_token=${this.fbPageToken}`;
 
     console.log(url);
 
