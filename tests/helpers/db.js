@@ -10,7 +10,10 @@ let database;
 
 const before = async () => {
   database = new MongoMemoryServer();
-  return mongoose.connect(await database.getConnectionString());
+  return mongoose.connect(await database.getConnectionString(), {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
 };
 
 const after = async () => {

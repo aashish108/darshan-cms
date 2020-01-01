@@ -4,14 +4,21 @@ const darshanModels = require('../models/schemas');
 const users = require('../models/users');
 
 const server = process.env.MONGODB_URL || '127.0.0.1';
-const database = 'see-our-shrine-uploads';
+const database = process.env.MONGODB_DBNAME;
 mongoose.Promise = global.Promise;
 
 async function connect() {
   try {
-    await mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${database}`, { useNewUrlParser: true });
-    console.log('Database connection successful');
-    return true;
+    if (process.env.ENV === 'live') {
+      return mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${database}`, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+      });
+    }
+    return await mongoose.connect(`mongodb://${server}/${database}`, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
   } catch (e) {
     console.error('Database connection error');
     throw e;
