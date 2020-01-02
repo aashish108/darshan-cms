@@ -7,9 +7,14 @@ describe('Controller unit testing', () => {
 
   beforeEach(() => {
     const compressImagesStub = () => true;
+    const slackStub = () => true;
     controller = proxyquire('../src/controllers/controller.js', {
       '../helpers/imageTools': {
         compressImages: compressImagesStub,
+      },
+      '../helpers/slack': {
+        sendNotification: slackStub,
+        '@noCallThru': true,
       },
     });
   });

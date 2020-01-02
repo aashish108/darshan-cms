@@ -1,8 +1,23 @@
 const { assert } = require('chai');
 const moment = require('moment');
-const controller = require('../src/controllers/controller.js');
+const proxyquire = require('proxyquire');
 
 describe('API testing', () => {
+  let controller;
+
+  beforeEach(() => {
+    const compressImagesStub = () => true;
+    const slackStub = () => true;
+    controller = proxyquire('../src/controllers/controller.js', {
+      '../helpers/imageTools': {
+        compressImages: compressImagesStub,
+      },
+      '../helpers/slack': {
+        sendNotification: slackStub,
+        '@noCallThru': true,
+      },
+    });
+  });
   it('getTwoLatestProcessedUploads', async () => {
     const req = {};
     const res = {};
