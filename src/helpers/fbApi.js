@@ -1,4 +1,5 @@
 const request = require('request');
+const slack = require('../helpers/slack');
 
 class FacebookApi {
   constructor(darshan, req, res) {
@@ -28,6 +29,7 @@ class FacebookApi {
     };
     try {
       await request(options, FacebookApi.callback);
+      slack.sendNotification(`<!here> Darshan images have been uploaded to Facebook with details: ${this.darshan.outfitDetails}`);
       this.res.render('upload-to-facebook-confirmation', {
         title: 'Facebook post Successful',
         message: 'Latest darshan has been posted on Facebook',

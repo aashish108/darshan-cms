@@ -1,5 +1,6 @@
 const Twitter = require('twitter');
 const fileSystem = require('fs');
+const slack = require('../helpers/slack');
 
 class TwitterApi {
   constructor(darshan, req, res) {
@@ -53,6 +54,7 @@ class TwitterApi {
     };
     this.client.post('statuses/update', status, (error, tweet, response) => {
       if (!error) {
+        slack.sendNotification(`<!here> Darshan images have been uploaded to Twitter with outfit details: ${this.darshan[0].outfitDetails}`);
         this.res.render('upload-to-twitter-confirmation', {
           title: 'Tweet Successful',
           message: 'Latest darshan has been tweeted',

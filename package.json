@@ -29,6 +29,7 @@
     "passport-local": "^1.0.0",
     "pug": "^2.0.4",
     "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
     "twitter": "^1.7.1"
   },
   "devDependencies": {

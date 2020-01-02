@@ -2,6 +2,7 @@ const db = require('../helpers/db');
 const FbApi = require('../helpers/fbApi');
 const imageTools = require('../helpers/imageTools');
 const TwitterApi = require('../helpers/twitterApi');
+const slack = require('../helpers/slack');
 
 function init() {
   db.connect();
@@ -32,7 +33,7 @@ async function uploadRawImages(req, res) {
     const compressedFileOutputName = await imageTools.compressImages(req.files);
     console.log('req.files', req.files);
     await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-    console.log('after addRawUploadsToDB');
+    slack.sendNotification(`<!here> Raw darshan images have been uploaded: ${req.body.outfitDetails}`);
     res.render('uploadSuccessful', {
       title: 'Upload Successful',
       message: 'Uploaded!',
@@ -50,6 +51,7 @@ async function uploadRawImages(req, res) {
 
 async function uploadProcessedImages(files, body) {
   try {
+    slack.sendNotification(`<!here> Processed darshan images have been uploaded for ${body.darshanDate} with outfit details: ${body.outfitDetails}`);
     return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
   } catch (e) {
     console.log(e);
