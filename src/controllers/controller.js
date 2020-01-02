@@ -33,7 +33,7 @@ async function uploadRawImages(req, res) {
     const compressedFileOutputName = await imageTools.compressImages(req.files);
     console.log('req.files', req.files);
     await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-    slack.sendNotification(`<!here> Raw darshan images have been uploaded: ${req.body.outfitDetails}`);
+    slack.sendNotification(`<!here> Raw darshan images have been uploaded. <${process.env.APP_LOGIN}|Login here>. Outfit details: ${req.body.outfitDetails}`);
     res.render('uploadSuccessful', {
       title: 'Upload Successful',
       message: 'Uploaded!',
