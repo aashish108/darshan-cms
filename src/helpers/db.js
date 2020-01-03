@@ -4,18 +4,17 @@ const darshanModels = require('../models/schemas');
 const users = require('../models/users');
 
 const server = process.env.MONGODB_URL || '127.0.0.1';
-const database = process.env.MONGODB_DBNAME;
 mongoose.Promise = global.Promise;
 
 async function connect() {
   try {
     if (process.env.ENV === 'live') {
-      return mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${database}`, {
+      return mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${process.env.MONGODB_DATABASE}`, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       });
     }
-    return await mongoose.connect(`mongodb://${server}/${database}`, {
+    return await mongoose.connect(`mongodb://${server}/${process.env.MONGODB_DATABASE}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
