@@ -8,6 +8,7 @@ mongoose.Promise = global.Promise;
 
 async function connect() {
   try {
+    console.log(`connection string: mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}`);
     if (process.env.ENV === 'live') {
       return mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${process.env.MONGODB_DATABASE}`, {
         useUnifiedTopology: true,
