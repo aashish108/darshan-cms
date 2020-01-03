@@ -15,6 +15,7 @@ async function connect() {
         useNewUrlParser: true,
       });
     }
+    console.log('For some reason, 2nd connect to DB is being called.');
     return await mongoose.connect(`mongodb://${server}/${process.env.MONGODB_DATABASE}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
