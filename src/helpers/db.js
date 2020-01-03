@@ -8,14 +8,13 @@ mongoose.Promise = global.Promise;
 
 async function connect() {
   try {
-    console.log('process.env.ENV', process.env.ENV);
+    console.log('Current environment:', process.env.ENV);
     if (process.env.ENV === 'live') {
       return await mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${process.env.MONGODB_DATABASE}`, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       });
     }
-    console.log('For some reason, 2nd connect to DB is being called.');
     return await mongoose.connect(`mongodb://${server}/${process.env.MONGODB_DATABASE}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
