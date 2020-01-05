@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const routes = require('./routes/index');
@@ -64,6 +65,7 @@ const app = express();
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
 // app.use(require('morgan')('combined'));
+app.use(cors());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
