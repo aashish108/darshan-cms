@@ -66,7 +66,7 @@ async function getRawUploadsFromDB() {
 
 async function getLatestProcessedUpload() {
   try {
-    return darshanModels.DarshanProcessedUploads.find({}).sort({ _id: -1 }).limit(1);
+    return darshanModels.DarshanProcessedUploads.find({}).sort({ darshanDate: 'desc' }).limit(1);
   } catch (e) {
     console.log(e);
     throw e;
@@ -75,7 +75,7 @@ async function getLatestProcessedUpload() {
 
 async function getTwoLatestProcessedUploads() {
   try {
-    return darshanModels.DarshanProcessedUploads.find({}).sort({ _id: -1 }).limit(2);
+    return darshanModels.DarshanProcessedUploads.find({}).sort({ darshanDate: 'desc' }).limit(2);
   } catch (e) {
     console.log(e);
     throw e;
