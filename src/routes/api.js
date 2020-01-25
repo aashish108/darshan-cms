@@ -7,7 +7,7 @@ router.get('/v1/darshan/latest', async (req, res) => {
   try {
     const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
     const data = {
-      path: `${req.headers.host}/uploads/`,
+      basePath: `https://${req.headers.host}/`,
       data: {
         ...latestDarshanImages,
       },
@@ -23,7 +23,7 @@ router.get('/v1/darshan/latest-two-days', async (req, res) => {
   try {
     const latestDarshanImages = await controller.getTwoLatestProcessedUploads(req, res);
     const data = {
-      path: `${req.headers.host}/uploads/`,
+      path: `https://${req.headers.host}/`,
       data: {
         ...latestDarshanImages,
       },
