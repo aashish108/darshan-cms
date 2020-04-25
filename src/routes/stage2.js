@@ -9,7 +9,13 @@ const router = Router();
 router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
     const results = await controller.getRawUploadedImages(req, res);
-    res.render('raw-uploaded-images', { title: 'Daily Darshan Files Uploader', results, user: req.user.username, roles: req.user.roles });
+
+    res.render('raw-uploaded-images', {
+      title: 'Daily Darshan Files Uploader',
+      results,
+      user: req.user.username,
+      roles: req.user.roles,
+    });
     res.end();
   } catch (e) {
     res.status(500).json(e);

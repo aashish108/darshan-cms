@@ -2,6 +2,7 @@ const { Router } = require('express');
 const passport = require('passport');
 const loggedIn = require('connect-ensure-login');
 const controller = require('../controllers/controller');
+
 const router = Router();
 
 router.get('/login',

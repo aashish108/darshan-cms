@@ -1,18 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const Strategy = require('passport-local').Strategy;
+const { Strategy } = require('passport-local');
 const routes = require('./routes/index');
 const controller = require('./controllers/controller');
+
 const port = 3000;
 
 controller.init();
-
-let trustProxy = false;
-if (process.env.DYNO) {
-  // Apps on heroku are behind a trusted proxy
-  trustProxy = true;
-}
 
 // Configure the local strategy for use by Passport.
 //
@@ -75,7 +70,7 @@ app.use('/bulma-calendar', express.static('node_modules/bulma-calendar/dist'));
 app.use('/uploads', express.static('uploads'));
 app.use('/public', express.static('public'));
 
-app.use(express.static(__dirname + '/'));
+app.use(express.static(`${__dirname}/`));
 
 app.set('views', './src/views/');
 
