@@ -7,7 +7,6 @@ const controller = require('./controllers/controller');
 const port = 3000;
 
 controller.init();
-// controller.setupAdminUser();
 
 let trustProxy = false;
 if (process.env.DYNO) {
