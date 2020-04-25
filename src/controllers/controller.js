@@ -89,10 +89,6 @@ async function authUser(user, password) {
   return db.authUser(user, password);
 }
 
-function setupAdminUser() {
-  db.setupAdminUser();
-}
-
 async function getUsers() {
   return db.getUsers();
 }
@@ -123,7 +119,6 @@ module.exports = {
   findUser,
   findUserByID,
   authUser,
-  setupAdminUser,
   getUsers,
   updateUser,
   addNewUser,

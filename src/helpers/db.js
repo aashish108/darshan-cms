@@ -120,20 +120,6 @@ async function findUserByID(id) {
   }
 }
 
-async function setupAdminUser() {
-  const newAdminUser = await new users.Users({
-    username: process.env.ADMIN_USER_NAME,
-    password: process.env.ADMIN_PASSWORD,
-  });
-  try {
-    await newAdminUser.save();
-    return true;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-}
-
 async function updateUser(username, password, roles) {
   const user = await users.Users.findOne({ username });
   user.password = password;
@@ -181,7 +167,6 @@ module.exports = {
   findUser,
   findUserByID,
   authUser,
-  setupAdminUser,
   getUsers,
   updateUser,
   addNewUser,
