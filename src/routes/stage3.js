@@ -10,7 +10,6 @@ router.get('/twitter', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async
     res.render('upload-to-twitter', {
       title: 'Daily Darshan Files Uploader', latestDarshanImages, user: req.user.username, roles: req.user.roles,
     });
-    res.end();
   } catch (e) {
     res.status(500).json(e);
   }
@@ -27,11 +26,13 @@ router.post('/twitter/upload', (req, res) => {
 
 router.get('/facebook', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
   try {
-    const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
+    const latestDarshanImages = await controller.getLatestProcessedUploads();
     res.render('upload-to-facebook', {
-      title: 'Daily Darshan Files Uploader', latestDarshanImages, user: req.user.username, roles: req.user.roles,
+      title: 'Daily Darshan Files Uploader',
+      latestDarshanImages,
+      user: req.user.username,
+      roles: req.user.roles,
     });
-    res.end();
   } catch (e) {
     res.status(500).json(e);
   }

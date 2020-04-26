@@ -10,7 +10,6 @@ const uploadRaw = multer({ dest: 'uploads/temp_raw_images' });
 
 router.get('/upload', loggedIn.ensureLoggedIn('/node/darshan-app/login'), (req, res) => {
   res.render('index', { title: 'Daily Darshan Files Uploader', user: req.user.username, roles: req.user.roles });
-  res.end();
 });
 
 router.post('/upload/process', loggedIn.ensureLoggedIn('/node/darshan-app/login'), uploadRaw.array('darshanPhotos', 30), (req, res) => {

@@ -16,7 +16,6 @@ router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/lo
       user: req.user.username,
       roles: req.user.roles,
     });
-    res.end();
   } catch (e) {
     res.status(500).json(e);
   }
@@ -59,10 +58,8 @@ router.post('/upload-processed-images/process', uploadProcessed.array('processed
       roles: req.user.roles,
       subDir: 'processed_images',
     });
-    res.end();
   } else {
     res.render('uploadSuccessful', { title: 'Upload Processed Images', message: 'Upload failed' });
-    res.end();
   }
 });
 
