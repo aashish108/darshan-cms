@@ -34,8 +34,8 @@ const darshanProcessedUploadsSchema = new mongoose.Schema({
   },
 });
 
-const DarshanRawUploads = mongoose.model('Darshan Raw Uploads', darshanRawUploadsSchema);
-const DarshanProcessedUploads = mongoose.model('Darshan Processed Uploads', darshanProcessedUploadsSchema);
+const DarshanRawUploads = mongoose.model('darshan-raw-uploads', darshanRawUploadsSchema);
+const DarshanProcessedUploads = mongoose.model('darshan-processed-uploads', darshanProcessedUploadsSchema);
 
 module.exports = {
   DarshanRawUploads,
