@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha \"./tests/**/*.spec.js\" --exit",
     "coverage": "nyc --reporter=lcov npm run test",
-    "start:watch": "nodemon server.js -e js,pug",
+    "start:watch": "nodemon --inspect server.js -e js,pug",
     "start": "node server.js"
   },
   "author": "Aashish Sharma",
