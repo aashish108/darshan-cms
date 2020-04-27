@@ -29,34 +29,25 @@ async function getRawUploadedImages() {
 }
 
 async function uploadRawImages(req, res) {
-  try {
-    const compressedFileOutputName = await imageTools.compressImages(req.files);
-    console.log('req.files', req.files);
-    await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-    slack.sendNotification(`<!here> Raw darshan images have been uploaded. <${process.env.APP_LOGIN}|Login here>. Outfit details: ${req.body.outfitDetails}`);
-    res.render('uploadSuccessful', {
-      title: 'Upload Successful',
-      message: 'Uploaded!',
-      files: req.files,
-      roles: req.user.roles,
-      subDir: 'temp_raw_images',
-    });
-    console.log('after render');
-    res.end();
-    return true;
-  } catch (e) {
-    throw new Error(e);
-  }
+  const compressedFileOutputName = await imageTools.compressImages(req.files);
+  console.log('req.files', req.files);
+  await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
+  slack.sendNotification(`<!here> Raw darshan images have been uploaded. <${process.env.APP_LOGIN}|Login here>. Outfit details: ${req.body.outfitDetails}`);
+  res.render('uploadSuccessful', {
+    title: 'Upload Successful',
+    message: 'Uploaded!',
+    files: req.files,
+    roles: req.user.roles,
+    subDir: 'temp_raw_images',
+  });
+  console.log('after render');
+  res.end();
+  return true;
 }
 
 async function uploadProcessedImages(files, body) {
-  try {
-    slack.sendNotification(`<!here> Processed darshan images have been uploaded for ${body.darshanDate} with outfit details: ${body.outfitDetails}`);
-    return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+  slack.sendNotification(`<!here> Processed darshan images have been uploaded for ${body.darshanDate} with outfit details: ${body.outfitDetails}`);
+  return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
 }
 
 async function getLatestProcessedUploads() {

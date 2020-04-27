@@ -45,7 +45,7 @@ describe('Controller unit testing', () => {
     req.user.roles = true;
     const results = await controller.getRawUploadedImages(req, res);
     console.log('DB response: ', results);
-    assert.equal(results[1].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was added in previous step.');
+    assert.equal(results[0].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was added in previous step.');
   });
 
   it('uploadProcessedImages', async () => {
@@ -66,7 +66,8 @@ describe('Controller unit testing', () => {
     return assert.isNotNull(response._id, 'Adding uploaded and processed images to DB returned as a success.');
   });
 
-  it('getProcessedUploadedImages - data uploaded is saved in DB', async () => {
+  it('getProcessedUploadedImages - data uploaded is saved in DB', async function () {
+    this.timeout(10000);
     const req = {};
     const res = {};
     req.user = {};

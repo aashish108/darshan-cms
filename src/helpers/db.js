@@ -7,22 +7,17 @@ const server = process.env.MONGODB_URL || '127.0.0.1';
 mongoose.Promise = global.Promise;
 
 async function connect() {
-  try {
-    console.log('Current environment:', process.env.ENV);
-    if (process.env.ENV === 'live') {
-      return await mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${process.env.MONGODB_DATABASE}`, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-      });
-    }
-    return await mongoose.connect(`mongodb://${server}/${process.env.MONGODB_DATABASE}`, {
+  console.log('Current environment:', process.env.ENV);
+  if (process.env.ENV === 'live') {
+    return mongoose.connect(`mongodb://${process.env.MONGODB_USERNAME}:${encodeURI(process.env.MONGODB_PASSWORD)}@${server}/${process.env.MONGODB_DATABASE}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-  } catch (e) {
-    console.error('Database connection error');
-    throw e;
   }
+  return mongoose.connect(`mongodb://${server}/${process.env.MONGODB_DATABASE}`, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
 }
 
 async function addUploadsToDB(files, outfitDetails) {
@@ -31,13 +26,8 @@ async function addUploadsToDB(files, outfitDetails) {
     files,
     outfitDetails,
   });
-  try {
-    await addToDB.save();
-    console.log('Save to DB successful.');
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  console.log('Save to DB successful.');
+  return addToDB.save();
 }
 
 async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
@@ -47,21 +37,11 @@ async function addProcessedUploadsToDB(files, outfitDetails, darshanDate) {
     outfitDetails,
     darshanDate,
   });
-  try {
-    return addToDB.save();
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return addToDB.save();
 }
 
 async function getRawUploadsFromDB() {
-  try {
-    return darshanModels.DarshanRawUploads.find({}).sort({ time: 'desc' });
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return darshanModels.DarshanRawUploads.find({}).sort({ time: 'desc' });
 }
 
 async function getLatestProcessedUpload() {
@@ -69,72 +49,41 @@ async function getLatestProcessedUpload() {
 }
 
 async function getTwoLatestProcessedUploads() {
-  try {
-    return darshanModels.DarshanProcessedUploads.find({}).sort({ darshanDate: 'desc' }).limit(2);
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return darshanModels.DarshanProcessedUploads.find({}).sort({ darshanDate: 'desc' }).limit(2);
 }
 
 async function authUser(user, password) {
-  try {
-    const userFound = await users.Users.findOne({ username: user }).exec();
-    if (userFound) {
-      const comparePasswordCallBack = (error, isMatch) => {
-        if (error) throw error;
-        return isMatch;
-      };
-      if (await userFound.comparePassword(password, comparePasswordCallBack)) {
-        return userFound;
-      }
-      return false;
+  const userFound = await users.Users.findOne({ username: user }).exec();
+  if (userFound) {
+    const comparePasswordCallBack = (error, isMatch) => {
+      if (error) throw error;
+      return isMatch;
+    };
+    if (await userFound.comparePassword(password, comparePasswordCallBack)) {
+      return userFound;
     }
     return false;
-  } catch (e) {
-    console.log(e);
-    throw e;
   }
+  return false;
 }
 
 async function findUser(user) {
-  try {
-    return users.Users.findOne({ username: user }).exec();
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return await users.Users.findOne({ username: user }).exec();
 }
 
 async function findUserByID(id) {
-  try {
-    return users.Users.findById({ _id: id }).exec();
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return users.Users.findById({ _id: id }).exec();
 }
 
 async function updateUser(username, password, roles) {
   const user = await users.Users.findOne({ username });
   user.password = password;
   user.roles = roles;
-  try {
-    await user.save();
-    return true;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+  return user.save();
 }
 
 async function getUsers() {
-  try {
-    return users.Users.find({});
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  return users.Users.find({});
 }
 
 async function addNewUser(username, password, roles) {
@@ -143,13 +92,7 @@ async function addNewUser(username, password, roles) {
     password,
     roles,
   });
-  try {
-    await newUser.save();
-    return true;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+  return newUser.save();
 }
 
 module.exports = {

@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   roles: { type: Array, required: true },
 });
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function (next) {
   const user = this;
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
@@ -33,13 +33,8 @@ UserSchema.pre('save', (next) => {
 });
 
 UserSchema.methods.comparePassword = async function (candidatePassword, cb) {
-  try {
-    const passwordCompare = await bcrypt.compare(candidatePassword, this.password);
-    return cb(null, passwordCompare);
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
+  const passwordCompare = await bcrypt.compare(candidatePassword, this.password);
+  return cb(null, passwordCompare);
 };
 
 const Users = mongoose.model('users', UserSchema);
