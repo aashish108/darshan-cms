@@ -44,7 +44,7 @@ describe('Controller unit testing', () => {
     res.render = () => true;
     req.user.roles = true;
     const results = await controller.getRawUploadedImages(req, res);
-    console.log('DB response: ', results);
+    console.log('DB response 2: ', results);
     assert.equal(results[0].outfitDetails, 'Outfit test 1', 'data is saved in DB and equates to what was added in previous step.');
   });
 
@@ -75,6 +75,7 @@ describe('Controller unit testing', () => {
     res.render = () => true;
     req.user.roles = true;
     const results = await controller.getLatestProcessedUploads(req, res);
+    console.log('DB response: ', results);
     return assert.equal(results[0].outfitDetails, 'Outfit test 2', 'data is saved in DB and equates to what was aded in previous step for uploading processed images.');
   });
 });

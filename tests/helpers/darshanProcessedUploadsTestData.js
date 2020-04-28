@@ -3,7 +3,7 @@ const schema = require('../../src/models/schemas');
 
 const init = async () => {
   const upload1 = await new schema.DarshanProcessedUploads({
-    timeUploaded: moment().format(),
+    timeUploaded: moment().subtract(1, 'days').format(),
     files: [
       'file1.jpg', 'file2.jpg',
     ],
