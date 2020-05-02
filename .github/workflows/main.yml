@@ -8,7 +8,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: aashish108/darshan-cms/darshan-cms-docker-image:1.0
+        name: aashish108/darshan-cms/darshan-cms-docker-image:latest
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.GITHUB_PERSONAL_TOKEN }}
         registry: docker.pkg.github.com
