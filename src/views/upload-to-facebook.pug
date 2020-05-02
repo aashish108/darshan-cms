@@ -12,7 +12,7 @@ html
               .columns
                 .column.is-vcentered
                   .div-table
-                    if (latestDarshanImages)
+                    if (latestDarshanImages.length > 0)
                       form(action="/node/darshan-app/stage3/facebook/upload" method="post")
                         table.table
                           thead
@@ -39,6 +39,6 @@ html
                     else
                       p No images to upload
     include includes/footerScripts.pug
-    if (latestDarshanImages)
+    if (latestDarshanImages.length > 0)
       script(defer='' src='/public/js/facebookApi.js')
       script(async='' defer='' src='https://connect.facebook.net/en_US/sdk.js')

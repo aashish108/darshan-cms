@@ -12,27 +12,30 @@ html
               .columns
                 .column.is-vcentered
                   .div-table
-                    form(action="/node/darshan-app/stage3/twitter/upload" method="post")
-                      table.table
-                        thead
-                          tr
-                            th
-                              abbr(title="Darshan Date") Darshan Date
-                            th
-                              abbr(title="Outfit Detail") Outfit Details
-                            th
-                              abbr(title="Images") Images
-                            th
-                              abbr(title="Upload") Upload
-                        tbody
-                          tr
-                            td= latestDarshanImages[0].darshanDate
-                            td= latestDarshanImages[0].outfitDetails
-                            td
-                              each image in latestDarshanImages[0].files
-                                figure.image.is-128x128
-                                  img(src='/uploads/processed_images/' + image.filename)
-                            td 
-                              button.button.is-success(type='submit') Upload to Twitter
+                    if (latestDarshanImages.length > 0)
+                      form(action="/node/darshan-app/stage3/twitter/upload" method="post")
+                        table.table
+                          thead
+                            tr
+                              th
+                                abbr(title="Darshan Date") Darshan Date
+                              th
+                                abbr(title="Outfit Detail") Outfit Details
+                              th
+                                abbr(title="Images") Images
+                              th
+                                abbr(title="Upload") Upload
+                          tbody
+                            tr
+                              td= latestDarshanImages[0].darshanDate
+                              td= latestDarshanImages[0].outfitDetails
+                              td
+                                each image in latestDarshanImages[0].files
+                                  figure.image.is-128x128
+                                    img(src='/uploads/processed_images/' + image.filename)
+                              td 
+                                button.button.is-success(type='submit') Upload to Twitter
+                    else
+                      p No images to upload
 
     include includes/footerScripts.pug     
