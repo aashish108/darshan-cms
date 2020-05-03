@@ -5,7 +5,7 @@ const { Strategy } = require('passport-local');
 const routes = require('./routes/index');
 const controller = require('./controllers/controller');
 
-const port = 3000;
+const port = process.env.DARSHAN_CMS_PORT || 3000;
 
 controller.init();
 
