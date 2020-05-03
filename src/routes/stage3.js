@@ -4,7 +4,7 @@ const controller = require('../controllers/controller');
 
 const router = Router();
 
-router.get('/twitter', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
+router.get('/twitter', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
   try {
     const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
     res.render('upload-to-twitter', {
@@ -27,7 +27,7 @@ router.post('/twitter/upload', (req, res) => {
   }
 });
 
-router.get('/facebook', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
+router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
   try {
     const latestDarshanImages = await controller.getLatestProcessedUploads();
     res.render('upload-to-facebook', {

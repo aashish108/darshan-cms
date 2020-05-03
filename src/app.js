@@ -76,7 +76,7 @@ app.set('views', './src/views/');
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/node/darshan-app', routes.router);
+app.use('/darshan-app', routes.router);
 app.listen(port, () => console.log(`Darshan-cms app listening on port ${port}.`));
 
 module.exports = app;

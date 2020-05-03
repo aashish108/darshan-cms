@@ -20,7 +20,7 @@ describe('Twitter API testing', () => {
 
   it('uploadToTwitter is called', () => {
     expressAppRequest
-      .post('/node/darshan-app/login')
+      .post('/darshan-app/login')
       .set('Token', 'text/plain')
       .set('content-type', 'application/x-www-form-urlencoded')
       .type('form')
@@ -28,7 +28,7 @@ describe('Twitter API testing', () => {
       .send('username=Sov108')
       .send('password=Password');
     expressAppRequest
-      .post('/node/darshan-app/stage3/twitter/upload')
+      .post('/darshan-app/stage3/twitter/upload')
       .set('Token', 'text/plain')
       .set('content-type', 'application/x-www-form-urlencoded')
       .type('form')

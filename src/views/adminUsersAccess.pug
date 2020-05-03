@@ -17,7 +17,7 @@ html
                       - var index = 0;
                       each result in results
                         - index = index + 1;
-                        form(action="/node/darshan-app/admin/process" method="post" autocomplete="off")
+                        form(action="/darshan-app/admin/process" method="post" autocomplete="off")
                           .columns
                             .column
                               input.input(type="text" readonly="readonly" value=`${result.username}` name=`username`)
@@ -51,7 +51,7 @@ html
                           button.button.is-success(type='submit') Save
                     .div-table 
                       h2.title Add New User
-                      form(action="/node/darshan-app/admin/process/add-new-user" method="post" autocomplete="off")
+                      form(action="/darshan-app/admin/process/add-new-user" method="post" autocomplete="off")
                         .columns
                           .column
                             input.input(type="text" name="newUsername")

@@ -6,7 +6,7 @@ const controller = require('../controllers/controller');
 const uploadProcessed = multer({ dest: 'uploads/processed_images' });
 const router = Router();
 
-router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), async (req, res) => {
+router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
   try {
     const results = await controller.getRawUploadedImages(req, res);
 
@@ -41,7 +41,7 @@ router.get('/uploads/compressed-raw-images/:file', (req, res) => {
   });
 });
 
-router.get('/upload-processed-images', loggedIn.ensureLoggedIn('/node/darshan-app/login'), (req, res) => {
+router.get('/upload-processed-images', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res) => {
   res.render('upload-processed-images', { title: 'Daily Darshan Files Uploader', user: req.user.username, roles: req.user.roles });
   res.end();
 });
