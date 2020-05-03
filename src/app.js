@@ -71,7 +71,6 @@ app.use('/darshan-app/uploads', express.static('uploads'));
 app.use('/darshan-app/public', express.static('public'));
 
 app.use(express.static(`${__dirname}/`));
-// app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.set('views', './src/views/');
 
