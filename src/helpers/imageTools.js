@@ -39,7 +39,7 @@ async function compressImages(files) {
   archive.pipe(output);
   
   for (let file of files) {
-    var file1 = `./uploads/temp_raw_images/${file.filename}`;
+    var file1 = `./darshan-app/uploads/temp_raw_images/${file.filename}`;
     archive.append(fs.createReadStream(file1), { name: `${file.filename}.jpg` });
   }
 

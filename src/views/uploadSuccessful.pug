@@ -1,7 +1,7 @@
 html
   include includes/head.pug
   body.page-uploadRawImagesSuccessful
-    section.hero.is-fullheight(style="background: url('/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+    section.hero.is-fullheight(style="background: url('/darshan-app/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
       .hero-head
         include includes/header.pug
       .hero-body
@@ -15,7 +15,7 @@ html
                 if files
                   each val in files
                     .column.is-3by2
-                      img.image(src=`/uploads/${subDir}/${val.filename}`)
+                      img.image(src=`/darshan-app/uploads/${subDir}/${val.filename}`)
       
     script(defer='' src='https://use.fontawesome.com/releases/v5.3.1/js/all.js')
-    script(defer='' src='/public/js/uploading-raw-files.js')
+    script(defer='' src='/darshan-app/public/js/uploading-raw-files.js')

@@ -21,9 +21,9 @@ router.get('/raw-uploaded-images', loggedIn.ensureLoggedIn('/darshan-app/login')
   }
 });
 
-router.get('/uploads/compressed-raw-images/:file', (req, res) => {
+router.get('/darshan-app/uploads/compressed-raw-images/:file', (req, res) => {
   const options = {
-    root: `${__basedir}/uploads/compressed_raw_images`,
+    root: `${__basedir}/darshan-app/uploads/compressed_raw_images`,
     dotfiles: 'deny',
     headers: {
       'x-timestamp': Date.now(),

@@ -65,12 +65,13 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 
 app.set('view engine', 'pug');
 
-app.use('/css-framework', express.static('node_modules/bulma/css')); // redirect CSS bootstrap
-app.use('/bulma-calendar', express.static('node_modules/bulma-calendar/dist'));
-app.use('/uploads', express.static('uploads'));
-app.use('/public', express.static('public'));
+app.use('/darshan-app/css-framework', express.static('node_modules/bulma/css')); // redirect CSS bootstrap
+app.use('/darshan-app/bulma-calendar', express.static('node_modules/bulma-calendar/dist'));
+app.use('/darshan-app/uploads', express.static('uploads'));
+app.use('/darshan-app/public', express.static('public'));
 
 app.use(express.static(`${__dirname}/`));
+// app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.set('views', './src/views/');
 
