@@ -1,0 +1,16 @@
+html
+  include includes/head.pug
+  body.page-uploadRawImages
+    section.hero.is-fullheight(style="background: url('/darshan-app/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+      .hero-head
+        include includes/header.pug
+      .hero-body
+        .container.is-fluid
+          .columns
+            .column
+              .column.is-vcentered.level
+                div.level-item.has-text-centered
+                  h2.title.is-1.is-spaced #{errorCode}
+                  h3.title.subtitle.is-1.is-spaced #{errorMessage}
+      
+    include includes/footerScripts.pug

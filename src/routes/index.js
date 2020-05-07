@@ -6,24 +6,25 @@ const controller = require('../controllers/controller');
 const router = Router();
 
 router.get('/login',
-  (req, res) => {
+  (req, res, next) => {
+    throw new Error('Something went wrong!');
     console.log('Redirecting to login');
     res.render('login');
   });
 
 router.post('/login',
   passport.authenticate('local', { failureRedirect: '/darshan-app/login' }),
-  (req, res) => {
+  (req, res, next) => {
     res.redirect('/darshan-app/stage1/upload');
   });
 
 router.get('/logout',
-  (req, res) => {
+  (req, res, next) => {
     req.logout();
     res.redirect('/');
   });
 
-router.get('/admin', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
+router.get('/admin', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res, next) => {
   try {
     const results = await controller.getUsers();
     res.render('adminUsersAccess', { title: 'Daily Darshan Files Uploader', results });
@@ -33,7 +34,7 @@ router.get('/admin', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, 
   }
 });
 
-router.post('/admin/process', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res) => {
+router.post('/admin/process', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res, next) => {
   try {
     const { username, newPassword, roles } = req.body;
     controller.updateUser(username, newPassword, roles, res);
@@ -42,7 +43,7 @@ router.post('/admin/process', loggedIn.ensureLoggedIn('/darshan-app/login'), (re
   }
 });
 
-router.post('/admin/process/add-new-user', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res) => {
+router.post('/admin/process/add-new-user', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res, next) => {
   try {
     const { newUsername, newPassword, roles } = req.body;
     controller.addNewUser(newUsername, newPassword, roles, res);

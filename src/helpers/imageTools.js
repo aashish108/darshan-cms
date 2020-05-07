@@ -8,18 +8,18 @@ const dirs = [
   'uploads/temp_raw_images',
 ];
 
+async function createDirsIfNotExist() {
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+  }
+  return true;
+}
+
 async function compressImages(files) {
   const aTime = Date.now();
   const fileName = `${aTime}.zip`;
-
-  async function createDirsIfNotExist() {
-    for (const dir of dirs) {
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-      }
-    }
-    return true;
-  }
 
   await createDirsIfNotExist(dirs);
 
