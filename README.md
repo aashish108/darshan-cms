@@ -23,7 +23,7 @@ This CMS is designed to:
 * Upload latest photos to Twitter/Facebook/website
 * Have API endpoints to supply the latest processed photos to the mobile app and the website
 
-# Tech Stack
+## Tech Stack
 * Node.js
 * Express.js framework
 * PUG templating engine
@@ -33,7 +33,7 @@ This CMS is designed to:
 * MongoDB via Mongoose
 * GitHub Actions CI/CD to build and deploy to the host via a self-hosted runner
 
-# Front-end Side
+# Front-end App
 This project is the CMS back-end side. For the website, my plan is to create a React app that will consume the API endpoints from this CMS and create a gallery of images that can switch between today and yesterdays.
 
 # Install
