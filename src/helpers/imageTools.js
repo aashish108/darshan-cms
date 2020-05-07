@@ -2,30 +2,39 @@
 const fs = require('fs');
 const archiver = require('archiver');
 
+const dirs = [
+  'uploads',
+  'uploads/compressed_raw_images',
+  'uploads/temp_raw_images',
+];
+
 async function compressImages(files) {
   const aTime = Date.now();
   const fileName = `${aTime}.zip`;
 
-  const dirs = [
-    'úploads',
-    'uploads/compressed_raw_images',
-    'uploads/temp_raw_images',
-  ];
+  async function createDirsIfNotExist() {
+    for (const dir of dirs) {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+      }
+    }
+    return true;
+  }
 
   await createDirsIfNotExist(dirs);
 
   const output = fs.createWriteStream(`uploads/compressed_raw_images/${aTime}.zip`);
   const archive = archiver('zip', {
-    zlib: { level: 9 } // Sets the compression level.
+    zlib: { level: 9 }, // Sets the compression level.
   });
-  output.on('close', function() {
-    console.log(archive.pointer() + ' total bytes');
+  output.on('close', () => {
+    console.log(`${archive.pointer()} total bytes`);
     console.log('archiver has been finalized and the output file descriptor has closed.');
   });
-  output.on('end', function() { 
+  output.on('end', () => {
     console.log('Data has been drained');
   });
-  archive.on('warning', function(err) {
+  archive.on('warning', (err) => {
     if (err.code === 'ENOENT') {
       // log warning
     } else {
@@ -33,13 +42,13 @@ async function compressImages(files) {
       throw err;
     }
   });
-  archive.on('error', function(err) {
+  archive.on('error', (err) => {
     throw err;
   });
   archive.pipe(output);
-  
-  for (let file of files) {
-    var file1 = `./darshan-app/uploads/temp_raw_images/${file.filename}`;
+
+  for (const file of files) {
+    const file1 = `/darshan-app/uploads/temp_raw_images/${file.filename}`;
     archive.append(fs.createReadStream(file1), { name: `${file.filename}.jpg` });
   }
 
@@ -47,15 +56,6 @@ async function compressImages(files) {
   return fileName;
 }
 
-async function createDirsIfNotExist(dirs) {
-  for (dir of dirs) {
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-    }
-  }
-  return true;
-}
-
 module.exports = {
   compressImages,
-}
+};
