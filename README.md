@@ -35,3 +35,9 @@ This CMS is designed to:
 
 # Front-end Side
 This project is the CMS back-end side. For the website, my plan is to create a React app that will consume the API endpoints from this CMS and create a gallery of images that can switch between today and yesterdays.
+
+# Install
+TBD
+
+# To Do
+* Look into React/Redux
