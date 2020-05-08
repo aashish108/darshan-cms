@@ -7,7 +7,6 @@ const router = Router();
 
 router.get('/login',
   (req, res) => {
-    // throw new Error('Something went wrong!');
     console.log('Redirecting to login');
     res.render('login');
   });

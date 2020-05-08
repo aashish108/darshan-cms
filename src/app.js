@@ -79,12 +79,12 @@ app.use(passport.session());
 
 app.use('/darshan-app', routes.router);
 
-// app.get('*', (req, res, next) => {
-//   const error = new Error('Page Not Found');
-//   error.statusCode = 404;
-//   error.shouldRedirect = true;
-//   next(error);
-// });
+app.get('*', (req, res, next) => {
+  const error = new Error('Page Not Found');
+  error.statusCode = 404;
+  error.shouldRedirect = true;
+  next(error);
+});
 
 // error handler middleware
 app.use((err, req, res, next) => {
