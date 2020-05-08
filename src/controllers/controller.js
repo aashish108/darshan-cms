@@ -24,34 +24,18 @@ async function getLatestProcessedUploadsFromDB() {
   return db.getLatestProcessedUpload();
 }
 
-async function getRawUploadedImages() {
-  return getRawUploadsFromDB();
+async function uploadRawImages(files) {
+  console.log('req.files', files);
+  return imageTools.compressImages(files);
 }
 
-async function uploadRawImages(req, res) {
-  const compressedFileOutputName = await imageTools.compressImages(req.files);
-  console.log('req.files', req.files);
-  await addRawUploadsToDB(compressedFileOutputName, req.body.outfitDetails);
-  slack.sendNotification(`<!here> Raw darshan images have been uploaded. <${process.env.APP_LOGIN}|Login here>. Outfit details: ${req.body.outfitDetails}`);
-  res.render('uploadSuccessful', {
-    title: 'Upload Successful',
-    message: 'Uploaded!',
-    files: req.files,
-    roles: req.user.roles,
-    subDir: 'temp_raw_images',
-  });
-  console.log('after render');
-  res.end();
-  return true;
+function sendSlackNotificationOnRawUploads(outfitDetails) {
+  slack.sendNotification(`<!here> Raw darshan images have been uploaded. <${process.env.APP_LOGIN}|Login here>. Outfit details: ${outfitDetails}`);
 }
 
 async function uploadProcessedImages(files, body) {
   slack.sendNotification(`<!here> Processed darshan images have been uploaded for ${body.darshanDate} with outfit details: ${body.outfitDetails}`);
   return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
-}
-
-async function getLatestProcessedUploads() {
-  return getLatestProcessedUploadsFromDB();
 }
 
 async function uploadToTwitter(req, res) {
@@ -100,10 +84,8 @@ module.exports = {
   init,
   addRawUploadsToDB,
   getRawUploadsFromDB,
-  getRawUploadedImages,
   uploadRawImages,
   uploadProcessedImages,
-  getLatestProcessedUploads,
   uploadToTwitter,
   uploadToFacebook,
   getTwoLatestProcessedUploads,
@@ -113,4 +95,6 @@ module.exports = {
   getUsers,
   updateUser,
   addNewUser,
+  sendSlackNotificationOnRawUploads,
+  getLatestProcessedUploadsFromDB,
 };

@@ -23,31 +23,39 @@ router.get('/logout',
     res.redirect('/');
   });
 
-router.get('/admin', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
+router.get('/admin', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res, next) => {
   try {
     const results = await controller.getUsers();
     res.render('adminUsersAccess', { title: 'Daily Darshan Files Uploader', results });
-    res.end();
   } catch (e) {
-    res.status(500).json(e);
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 
-router.post('/admin/process', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res) => {
+router.post('/admin/process', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res, next) => {
   try {
     const { username, newPassword, roles } = req.body;
     controller.updateUser(username, newPassword, roles, res);
   } catch (e) {
-    res.status(500).json(e);
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 
-router.post('/admin/process/add-new-user', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res) => {
+router.post('/admin/process/add-new-user', loggedIn.ensureLoggedIn('/darshan-app/login'), (req, res, next) => {
   try {
     const { newUsername, newPassword, roles } = req.body;
     controller.addNewUser(newUsername, newPassword, roles, res);
   } catch (e) {
-    res.status(500).json(e);
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 

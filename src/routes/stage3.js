@@ -4,9 +4,9 @@ const controller = require('../controllers/controller');
 
 const router = Router();
 
-router.get('/twitter', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
+router.get('/twitter', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res, next) => {
   try {
-    const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
+    const latestDarshanImages = await controller.getLatestProcessedUploadsFromDB();
     res.render('upload-to-twitter', {
       title: 'Daily Darshan Files Uploader',
       latestDarshanImages,
@@ -14,22 +14,27 @@ router.get('/twitter', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req
       roles: req.user.roles,
     });
   } catch (e) {
-    res.status(500).json(e);
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 
-router.post('/twitter/upload', (req, res) => {
+router.post('/twitter/upload', (req, res, next) => {
   try {
     controller.uploadToTwitter(req, res);
   } catch (e) {
-    res.status(500).json(e);
-    res.end();
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 
-router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res) => {
+router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res, next) => {
   try {
-    const latestDarshanImages = await controller.getLatestProcessedUploads();
+    const latestDarshanImages = await controller.getLatestProcessedUploadsFromDB();
     res.render('upload-to-facebook', {
       title: 'Daily Darshan Files Uploader',
       latestDarshanImages,
@@ -37,16 +42,21 @@ router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (re
       roles: req.user.roles,
     });
   } catch (e) {
-    res.status(500).json(e);
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 
-router.post('/facebook/upload', (req, res) => {
+router.post('/facebook/upload', (req, res, next) => {
   try {
     controller.uploadToFacebook(req, res);
   } catch (e) {
-    res.status(500).json(e);
-    res.end();
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
   }
 });
 

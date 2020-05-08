@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/v1/darshan/latest', async (req, res) => {
   try {
-    const latestDarshanImages = await controller.getLatestProcessedUploads(req, res);
+    const latestDarshanImages = await controller.getLatestProcessedUploadsFromDB(req, res);
     const data = {
       basePath: `https://${req.headers.host}/`,
       data: {
