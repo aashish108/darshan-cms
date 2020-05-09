@@ -1,5 +1,7 @@
 .column.is-one-fifth
   aside.menu
+    p.menu-label.has-text-white
+      | Darshan CMS
     - if (roles)
       - var uploaderRole = roles.some(role => role === 'admin' || role === 'uploader');
     if (uploaderRole)
