@@ -33,6 +33,7 @@ describe('Controller unit testing', () => {
     res.render = () => true;
 
     const test = await controller.uploadRawImages(req, res);
+    await controller.addRawUploadsToDB(req.files[0], req.body.outfitDetails);
     assert.isNotNull(test, 'uploading images successful');
   });
 
