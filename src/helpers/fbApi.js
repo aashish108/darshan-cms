@@ -16,7 +16,7 @@ class FacebookApi {
   async urlConstruction() {
     const parts = [];
     for (const file of this.darshan[0].files) {
-      parts.push(`{link:'${process.env.HOST}/${file.destination}/${file.filename}'},`);
+      parts.push(`{link:'${process.env.HOST}/darshan-cms/${file.destination}/${file.filename}'},`);
     }
     const childAttachments = encodeURI(`[${parts.join('')}]`);
     const url = `https://graph.facebook.com/v3.3/161715481383/feed?message=${this.darshan.outfitDetails}&child_attachments=${childAttachments}&link=https://www.iskcon.london&access_token=${this.fbPageToken}`;
