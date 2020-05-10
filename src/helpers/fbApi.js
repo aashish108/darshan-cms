@@ -40,7 +40,7 @@ class FacebookApi {
   }
 
   static async callback(error, response, body) {
-    // slack.sendNotification(`<!here> Darshan images have been uploaded to Facebook with details: ${self.darshan.outfitDetails}`);
+    slack.sendNotification(`<!here> Darshan images have been uploaded to Facebook with details: ${self.darshan.outfitDetails}`);
     console.log('error: ', error);
     console.log('response: ', response.statusCode);
     console.log('body: ', body);

@@ -50,14 +50,7 @@ router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (re
 });
 router.post('/facebook/upload', async (req, res, next) => {
   try {
-    const response = await controller.uploadToFacebook(req, res, next);
-    // if (response) {
-    //   const error = new Error();
-    //   error.statusCode = 500;
-    //   error.shouldRedirect = true;
-    //   error.message = response;
-    //   next(error);
-    // }
+    await controller.uploadToFacebook(req, res, next);
   } catch (e) {
     const error = new Error(e);
     error.statusCode = 500;
