@@ -1,7 +1,7 @@
 html
   include includes/head.pug
   body.page-uploadRawImages
-    section.hero.is-fullheight(style="background: url('/darshan-app/public/images/shiva1.jpg');background-repeat:no-repeat;background-size: cover;")
+    section.hero.is-fullheight
       .hero-head
         include includes/header.pug
       .hero-body
@@ -10,7 +10,7 @@ html
             .column
               .column.is-vcentered
                 div.has-text-centered
-                  h2.title.is-1.is-spaced #{errorCode}
-                  h3.subtitle.is-1 #{errorMessage}
+                  h2.title.is-1.is-spaced.has-text-white #{errorCode}
+                  h3.subtitle.is-1.has-text-white #{errorMessage}
       
     include includes/footerScripts.pug

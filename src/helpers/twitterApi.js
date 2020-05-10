@@ -27,7 +27,7 @@ class TwitterApi {
 
   darshanImages() {
     for (const image of this.darshan[0].files) {
-      const data = fileSystem.readFileSync(`${__basedir}/darshan-app/uploads/processed_images/${image.filename}`);
+      const data = fileSystem.readFileSync(`${__basedir}/uploads/processed_images/${image.filename}`);
       this.uploadMedia(data);
     }
   }

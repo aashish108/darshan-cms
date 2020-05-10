@@ -8,7 +8,7 @@ const init = async () => {
       'file1.jpg', 'file2.jpg',
     ],
     outfitDetails: 'Outfit 1',
-    darshanDate: moment().format(),
+    darshanDate: moment().subtract(1, 'days').format(),
   });
 
   try {
