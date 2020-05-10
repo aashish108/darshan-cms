@@ -10,6 +10,7 @@ class FacebookApi {
     this.res = res;
     this.next = next;
     this.fbPageToken = req.body.fbPageToken;
+    // We use self to point to this so the this context is not lost for callbacks
     self = this;
   }
 
