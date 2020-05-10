@@ -18,7 +18,7 @@ window.fbAsyncInit = () => {
             console.log(response.error);
           } else {
             console.log(response);
-            const token = response.authResponse.access_token;
+            const token = response.authResponse.accessToken;
             document.getElementById('fbToken').value = token;
           }
         });
