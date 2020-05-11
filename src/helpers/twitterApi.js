@@ -39,7 +39,7 @@ class TwitterApi {
 
   async uploadMedia(data) {
     await this.client.post('media/upload', { media: data }, (error, media, response) => {
-      console.log('Twitter upload media response: ', response);
+      console.log('Twitter upload media response: ', response.body);
       if (!error) {
         // If successful, a media object will be returned.
         this.mediaIds.push(media.media_id_string);
@@ -58,16 +58,16 @@ class TwitterApi {
     });
   }
 
-  tweet() {
+  async tweet() {
     const status = {
       status: this.darshan[0].outfitDetails,
       media_ids: this.mediaIds.join(),
     };
-    this.client.post('statuses/update', status, (error, tweet, response) => {
-      console.log('Tweet response: ', response);
-      if (!error) {
+    this.client.post('statuses/update', status, async (error, tweet, response) => {
+      const responseJSON = await JSON.parse(response.body);
+      if (!error && !responseJSON.errors) {
         slack.sendNotification(`<!here> Darshan images have been uploaded to Twitter with outfit details: ${this.darshan[0].outfitDetails}`);
-        this.res.render('upload-to-twitter-confirmation', {
+        return this.res.render('upload-to-twitter-confirmation', {
           title: 'Tweet Successful',
           message: 'Latest darshan has been tweeted',
           user: tweet.user.screen_name,
@@ -75,6 +75,11 @@ class TwitterApi {
           roles: this.req.user.roles,
         });
       }
+      const errorRes = new Error();
+      errorRes.statusCode = 500;
+      errorRes.shouldRedirect = true;
+      errorRes.message = responseJSON.errors[0].message || 'Tweet failed for an unknown reason';
+      self.next(errorRes);
     });
   }
 }
