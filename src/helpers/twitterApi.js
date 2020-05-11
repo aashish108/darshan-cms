@@ -79,7 +79,7 @@ class TwitterApi {
       errorRes.statusCode = 500;
       errorRes.shouldRedirect = true;
       errorRes.message = responseJSON.errors[0].message || 'Tweet failed for an unknown reason';
-      self.next(errorRes);
+      return self.next(errorRes);
     });
   }
 }
