@@ -88,6 +88,7 @@ app.get('*', (req, res, next) => {
 
 // error handler middleware
 app.use((err, req, res, next) => {
+  console.log('Original URL:', req.originalUrl);
   console.error(err.message);
   if (!err.statusCode) err.statusCode = 500;
 

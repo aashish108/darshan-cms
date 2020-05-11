@@ -38,14 +38,15 @@ async function uploadProcessedImages(files, body) {
   return addProcessedUploadsToDB(files, body.outfitDetails, body.darshanDate);
 }
 
-async function uploadToTwitter(req, res) {
-  const twitterApiInstance = new TwitterApi(await getLatestProcessedUploadsFromDB(), req, res);
+async function uploadToTwitter(req, res, next) {
+  const latestProcessedUploads = await getLatestProcessedUploadsFromDB();
+  const twitterApiInstance = new TwitterApi(latestProcessedUploads, req, res, next);
   twitterApiInstance.init(res);
 }
 
-async function uploadToFacebook(req, res) {
-  const fbApiInstance = new FbApi(await getLatestProcessedUploadsFromDB(), req, res);
-  fbApiInstance.init();
+async function uploadToFacebook(req, res, next) {
+  const fbApiInstance = await new FbApi(await getLatestProcessedUploadsFromDB(), req, res, next);
+  return fbApiInstance.init();
 }
 
 async function getTwoLatestProcessedUploads() {

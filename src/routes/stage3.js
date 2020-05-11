@@ -21,9 +21,9 @@ router.get('/twitter', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req
   }
 });
 
-router.post('/twitter/upload', (req, res, next) => {
+router.post('/twitter/upload', async (req, res, next) => {
   try {
-    controller.uploadToTwitter(req, res);
+    await controller.uploadToTwitter(req, res, next);
   } catch (e) {
     const error = new Error(e);
     error.statusCode = 500;
@@ -40,6 +40,7 @@ router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (re
       latestDarshanImages,
       user: req.user.username,
       roles: req.user.roles,
+      env: process.env.ENV,
     });
   } catch (e) {
     const error = new Error(e);
@@ -48,10 +49,9 @@ router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (re
     next(error);
   }
 });
-
-router.post('/facebook/upload', (req, res, next) => {
+router.post('/facebook/upload', async (req, res, next) => {
   try {
-    controller.uploadToFacebook(req, res);
+    await controller.uploadToFacebook(req, res, next);
   } catch (e) {
     const error = new Error(e);
     error.statusCode = 500;
