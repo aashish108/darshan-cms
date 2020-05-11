@@ -2,13 +2,17 @@ const Twitter = require('twitter');
 const fileSystem = require('fs');
 const slack = require('../helpers/slack');
 
+let self;
+
 class TwitterApi {
-  constructor(darshan, req, res) {
+  constructor(darshan, req, res, next) {
     this.darshan = darshan;
     this.mediaIds = [];
     this.filesUploaded = 0;
     this.req = req;
     this.res = res;
+    this.next = next;
+    self = this;
   }
 
   init() {
@@ -33,8 +37,9 @@ class TwitterApi {
     }
   }
 
-  uploadMedia(data) {
-    this.client.post('media/upload', { media: data }, (error, media, response) => {
+  async uploadMedia(data) {
+    await this.client.post('media/upload', { media: data }, (error, media, response) => {
+      console.log('Twitter upload media response: ', response);
       if (!error) {
         // If successful, a media object will be returned.
         this.mediaIds.push(media.media_id_string);
@@ -44,6 +49,11 @@ class TwitterApi {
         }
       } else {
         console.log('Upload to Twitter failed: ', error);
+        const errorRes = new Error();
+        errorRes.statusCode = 500;
+        errorRes.shouldRedirect = true;
+        errorRes.message = error;
+        self.next(errorRes);
       }
     });
   }
@@ -54,6 +64,7 @@ class TwitterApi {
       media_ids: this.mediaIds.join(),
     };
     this.client.post('statuses/update', status, (error, tweet, response) => {
+      console.log('Tweet response: ', response);
       if (!error) {
         slack.sendNotification(`<!here> Darshan images have been uploaded to Twitter with outfit details: ${this.darshan[0].outfitDetails}`);
         this.res.render('upload-to-twitter-confirmation', {
@@ -63,7 +74,6 @@ class TwitterApi {
           tweetId: tweet.id_str,
           roles: this.req.user.roles,
         });
-        this.res.end();
       }
     });
   }

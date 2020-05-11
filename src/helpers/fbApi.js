@@ -2,6 +2,7 @@ const request = require('request');
 const slack = require('../helpers/slack');
 
 let self;
+
 class FacebookApi {
   constructor(darshan, req, res, next) {
     this.darshan = darshan;
