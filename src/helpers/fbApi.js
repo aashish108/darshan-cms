@@ -42,12 +42,7 @@ class FacebookApi {
 
   static async callback(error, response, body) {
     slack.sendNotification(`<!here> Darshan images have been uploaded to Facebook with details: ${self.darshan.outfitDetails}`);
-    console.log('error: ', error);
-    console.log('response: ', response.statusCode);
-    console.log('body: ', body);
     const bodyJson = await JSON.parse(body);
-    console.log('json', bodyJson);
-    console.log('error', bodyJson.error);
     if (!error && response.statusCode === 200) {
       return self.res.render('upload-to-facebook-confirmation', {
         title: 'Facebook post Successful',
@@ -57,7 +52,7 @@ class FacebookApi {
     }
     console.log('bodyJson.error.message', bodyJson.error.message);
     const errorRes = new Error();
-    errorRes.statusCode = 500;
+    errorRes.statusCode = response.statusCode || 500;
     errorRes.shouldRedirect = true;
     errorRes.message = bodyJson.error.message;
     return self.next(errorRes);
