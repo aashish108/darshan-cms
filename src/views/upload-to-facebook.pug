@@ -42,7 +42,7 @@ html
                       p No images to upload
     include includes/footerScripts.pug
     if (latestDarshanImages.length > 0)
-      //- script(defer='' src='/darshan-app/public/js/facebookApi.js')
+      script(defer='' src='/darshan-app/public/js/facebookPage.js')
       if (env === 'dev')
         script(async='' defer='' src='https://connect.facebook.net/en_US/sdk/debug.js')
       else

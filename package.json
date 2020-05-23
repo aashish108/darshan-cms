@@ -7,8 +7,8 @@
     "start": "node server.js",
     "start:watch": "nodemon --inspect server.js -e js,pug",
     "build": "npm run parcel:build",
-    "parcel:dev": "parcel src/frontend/pages/facebookPage.js",
-    "parcel:build": "parcel build src/frontend/pages/facebookPage.js",
+    "parcel:dev": "parcel src/frontend/pages/facebookPage.js --out-dir public/js",
+    "parcel:build": "parcel build src/frontend/pages/facebookPage.js --out-dir public/js",
     "test": "mocha --timeout 10000 \"./tests/**/*.spec.js\" --exit",
     "coverage": "nyc --reporter=lcov npm run test"
   },
