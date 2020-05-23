@@ -1,7 +1,6 @@
 class Facebook {
   constructor() {
     this.latestDarshanImages = window.latestDarshanImages;
-    self = this;
     Facebook.init();
     this.login();
   }
@@ -66,4 +65,4 @@ class Facebook {
   }
 }
 
-// export default Facebook;
+export default Facebook;
