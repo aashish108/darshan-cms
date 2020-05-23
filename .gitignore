@@ -9,3 +9,5 @@ coverage
 .vscode/notes.txt
 .cache
 dist
+public/js/facebookPage.js
+public/js/*.map
