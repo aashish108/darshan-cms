@@ -1,5 +1,4 @@
 const db = require('../helpers/db');
-const FbApi = require('../helpers/fbApi');
 const imageTools = require('../helpers/imageTools');
 const TwitterApi = require('../helpers/twitterApi');
 const slack = require('../helpers/slack');

@@ -49,6 +49,21 @@ router.get('/facebook', loggedIn.ensureLoggedIn('/darshan-app/login'), async (re
     next(error);
   }
 });
+
+router.get('/facebook/upload/confirmation', loggedIn.ensureLoggedIn('/darshan-app/login'), async (req, res, next) => {
+  try {
+    res.render('upload-to-facebook-confirmation', {
+      title: 'Facebook post Successful',
+      message: 'Latest darshan has been posted on Facebook',
+    });
+  } catch (e) {
+    const error = new Error(e);
+    error.statusCode = 500;
+    error.shouldRedirect = true;
+    next(error);
+  }
+});
+
 router.post('/facebook/upload', async (req, res, next) => {
   try {
     await controller.uploadToFacebook(req, res, next);

@@ -1,6 +1,8 @@
 html
   include includes/head.pug
   body.page-uploadToFacebook
+    script.
+      let latestDarshanImages = !{JSON.stringify(latestDarshanImages)};
     section.hero.is-fullheight
       .hero-head
         include includes/header.pug
@@ -40,7 +42,7 @@ html
                       p No images to upload
     include includes/footerScripts.pug
     if (latestDarshanImages.length > 0)
-      script(defer='' src='/darshan-app/public/js/facebookApi.js')
+      //- script(defer='' src='/darshan-app/public/js/facebookApi.js')
       if (env === 'dev')
         script(async='' defer='' src='https://connect.facebook.net/en_US/sdk/debug.js')
       else
