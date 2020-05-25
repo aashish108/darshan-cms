@@ -61,7 +61,7 @@ class Facebook {
     });
   }
 
-  post(self) {
+  post() {
     console.log('this.latestDarshanImages[0].outfitDetails', this.latestDarshanImages[0].outfitDetails);
     FB.api(
       `/${this.fbPageId}/feed`,
