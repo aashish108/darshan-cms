@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
@@ -68,6 +70,7 @@ app.set('view engine', 'pug');
 app.use('/darshan-app/css-framework', express.static('node_modules/bulma/css')); // redirect CSS bootstrap
 app.use('/darshan-app/bulma-calendar', express.static('node_modules/bulma-calendar/dist'));
 app.use('/darshan-app/uploads', express.static('uploads'));
+app.use('/darshan-cms/uploads', express.static('uploads'));
 app.use('/darshan-app/public', express.static('public'));
 
 app.use(express.static(`${__dirname}/`));
@@ -103,6 +106,16 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(port, () => console.log(`Darshan-cms app listening on port ${port}.`));
+if (process.env.ENV === 'dev') {
+  https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert'),
+  }, app)
+    .listen(port, () => {
+      console.log(`Example app listening on port ${port}! Go to https://localhost:3000/`);
+    });
+} else {
+  app.listen(port, () => console.log(`Darshan-cms app listening on port ${port}.`));
+}
 
 module.exports = app;

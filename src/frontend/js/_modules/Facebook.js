@@ -1,20 +1,38 @@
 class Facebook {
   constructor() {
-    this.latestDarshanImages = window.latestDarshanImages;
-    Facebook.init();
-    this.login();
+    this.latestDarshanImages = latestDarshanImages;
+    this.appId = '2316161761778187';
+    this.fbAppVersion = 'v7.0';
+    this.fbPageId = '161715481383';
+    this.fbScope = 'pages_manage_posts';
+    this.darshanUrl = 'https://www.iskcon-london.org/visit/see-our-shrine';
+    this.baseAppUrl = 'https://apps.iskcon.london:8282';
+    // this.baseImageUrl = 'https://apps.iskcon.london';
+    this.baseImageUrl = 'https://localhost:3000';
+    this.init();
+    this.uploadToFacebookButton();
   }
 
-  static init() {
+  init() {
     FB.init({
-      appId: '2316161761778187',
+      appId: this.appId,
       autoLogAppEvents: true,
       xfbml: true,
-      version: 'v7.0',
+      version: this.fbAppVersion,
+    });
+  }
+
+  uploadToFacebookButton() {
+    const button = document.querySelector('form button');
+    const self = this;
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      self.login();
     });
   }
 
   login() {
+    const self = this;
     FB.login((response) => {
       if (response.authResponse) {
         console.log('Welcome!  Fetching your information.... ');
@@ -22,14 +40,14 @@ class Facebook {
         FB.api('/me', () => {
           console.log(`Good to see you, ${response.name}.`);
 
-          FB.api('161715481383?fields=access_token', 'get', {}, () => {
+          FB.api(`${this.fbPageId}?fields=access_token`, 'get', {}, () => {
             if (!response || response.error) {
               console.log(response.error);
             } else {
               console.log(response);
               const token = response.authResponse.accessToken;
               document.getElementById('fbToken').value = token;
-              this.post();
+              this.post(self);
             }
           });
         });
@@ -37,31 +55,34 @@ class Facebook {
         console.log('User cancelled login or did not fully authorize.');
       }
     }, {
-      scope: 'pages_manage_posts',
+      scope: this.fbScope,
       return_scopes: true,
       enable_profile_selector: true,
     });
   }
 
-  post() {
+  post(self) {
+    console.log('this.latestDarshanImages[0].outfitDetails', this.latestDarshanImages[0].outfitDetails);
     FB.api(
-      '/161715481383/feed',
+      `/${this.fbPageId}/feed`,
       'POST',
       {
         message: this.latestDarshanImages[0].outfitDetails,
         child_attachments: this.childAttachments(),
-        link: 'https://www.iskcon-london.org/visit/see-our-shrine',
+        link: this.darshanUrl,
       },
       (fbResponse) => {
         if (fbResponse && !fbResponse.error) {
-          window.location.href = 'https://apps.iskcon.london:8282/darshan-app/stage3/facebook/upload/confirmation';
+          window.location.href = `${this.baseAppUrl}/darshan-app/stage3/facebook/upload/confirmation`;
         }
       },
     );
   }
 
   childAttachments() {
-    return this.latestDarshanImages.map((imageObject) => ({ link: `https://apps.iskcon.london/darshan-cms/uploads/processed_images/${imageObject.filename}` }));
+    const self = this;
+    console.log('this.latestDarshanImages in childAtt', this.latestDarshanImages);
+    return this.latestDarshanImages[0].files.map((imageObject) => ({ link: `${self.baseImageUrl}/darshan-cms/uploads/processed_images/${imageObject.filename}` }));
   }
 }
 

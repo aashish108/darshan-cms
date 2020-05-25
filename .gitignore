@@ -11,3 +11,5 @@ coverage
 dist
 public/js/facebookPage.js
 public/js/*.map
+server.cert
+server.key
