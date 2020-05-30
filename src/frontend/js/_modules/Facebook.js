@@ -17,8 +17,7 @@ class Facebook {
     this.fbScopes = fbScopesArray.join();
     this.darshanUrl = 'https://www.iskcon-london.org/visit/see-our-shrine';
     this.baseAppUrl = 'https://apps.iskcon.london:8282';
-    // this.baseImageUrl = 'https://apps.iskcon.london';
-    this.baseImageUrl = 'https://localhost:3000';
+    this.baseImageUrl = 'https://apps.iskcon.london';
     this.init();
     this.uploadToFacebookButton();
   }
