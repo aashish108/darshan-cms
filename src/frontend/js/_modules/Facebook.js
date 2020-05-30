@@ -4,7 +4,16 @@ class Facebook {
     this.appId = '2316161761778187';
     this.fbAppVersion = 'v7.0';
     this.fbPageId = '161715481383';
-    this.fbScope = 'pages_manage_posts';
+    const fbScopesArray = [
+      'pages_manage_posts',
+      'pages_show_list',
+      'publish_to_groups',
+      'pages_read_engagement',
+      'pages_read_user_content',
+      'pages_manage_posts',
+      'pages_manage_engagement',
+    ];
+    this.fbScopes = fbScopesArray.join();
     this.darshanUrl = 'https://www.iskcon-london.org/visit/see-our-shrine';
     this.baseAppUrl = 'https://apps.iskcon.london:8282';
     // this.baseImageUrl = 'https://apps.iskcon.london';
